@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+import 'package:championforms/championforms.dart' as form;
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
+
+/// A custom field that displays switch groups using ShadCN Flutter's Switch component.
+///
+/// This field stores a List<FieldOption> for multiselect switch groups.
+/// Each switch can be independently toggled.
+///
+/// ## Usage
+///
+/// ```dart
+/// final switchField = ShadcnSwitchField(
+///   id: 'preferences',
+///   title: 'Select Your Preferences',
+///   description: 'Choose one or more options',
+///   options: [
+///     form.FieldOption(label: 'Email Notifications', value: 'email'),
+///     form.FieldOption(label: 'SMS Notifications', value: 'sms'),
+///     form.FieldOption(label: 'Push Notifications', value: 'push'),
+///   ],
+///   defaultValue: [], // none checked by default
+///   labelOnLeft: false, // labels appear on the right (trailing)
+/// );
+/// ```
+class ShadcnSwitchField extends form.OptionSelect {
+  /// Whether labels should appear on the left (leading) or right (trailing) of the switch.
+  /// Defaults to false (labels on the right).
+  final bool labelOnLeft;
+
+  ShadcnSwitchField({
+    required super.id,
+    super.title,
+    super.description,
+    super.disabled = false,
+    super.hideField = false,
+    super.requestFocus = false,
+    super.validators,
+    super.validateLive = false,
+    super.onSubmit,
+    super.onChange,
+    super.theme,
+    super.fieldLayout,
+    super.fieldBackground,
+    required super.options,
+    super.defaultValue,
+    super.multiselect,
+    this.labelOnLeft = false,
+  });
+}
+
+/// A switch group widget using ShadCN Flutter's Switch component.
+///
+/// This widget displays multiple switches where each can be independently toggled.
+/// The value is stored as a List<FieldOption> containing all selected options.
+///
+/// Features:
+/// - Uses ShadCN Flutter's Switch component
+/// - Supports multiple switch selections
+/// - Stores List<FieldOption> for selected switches
+/// - Automatically triggers onChange callbacks
+/// - Configurable label position (leading or trailing)
+///
+/// Example:
+/// ```dart
+/// ShadcnSwitchField(
+///   id: 'preferences',
+///   title: 'Notification Preferences',
+///   description: 'Select your preferred notification methods',
+///   options: [
+///     form.FieldOption(label: 'Email', value: 'email'),
+///     form.FieldOption(label: 'SMS', value: 'sms'),
+///   ],
+///   labelOnLeft: false,
+/// )
+/// ```
+class ShadcnSwitchWidget extends form.StatefulFieldWidget {
+  /// Whether labels should appear on the left (leading) or right (trailing) of the switch.
+  /// Defaults to false (labels on the right).
+  final bool labelOnLeft;
+
+  const ShadcnSwitchWidget({
+    required super.context,
+    this.labelOnLeft = false,
+    super.key,
+  });
+
+  @override
+  Widget buildWithTheme(
+    BuildContext buildContext,
+    form.FormTheme theme,
+    form.FieldBuilderContext ctx,
+  ) {
+    // Get options from the OptionSelect field
+    final field = ctx.field as form.OptionSelect;
+    final options = field.options ?? [];
+
+    return Column(
+      key: ValueKey('switch_col_${ctx.field.id}'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Render each switch option
+        ...options.map((option) {
+          // Check if this specific option is selected
+          final isSelected = ctx.isOptionSelected(option.value);
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: shadcn.Switch(
+              key: ValueKey('switch_${ctx.field.id}_${option.value}'),
+              value: isSelected,
+              onChanged: ctx.field.disabled
+                  ? null
+                  : (newValue) {
+                      // Toggle this option's selection
+                      ctx.toggleValue(option);
+                    },
+              // Position label based on labelOnLeft parameter
+              leading: labelOnLeft ? Text(option.label) : null,
+              trailing: !labelOnLeft ? Text(option.label) : null,
+            ),
+          );
+        }),
+      ],
+    );
+  }
+
+  @override
+  void onValueChanged(dynamic oldValue, dynamic newValue) {
+    if (context.field.onChange != null) {
+      final results = form.FormResults.getResults(controller: context.controller);
+      context.field.onChange!(results);
+    }
+  }
+}

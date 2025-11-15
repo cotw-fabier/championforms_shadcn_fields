@@ -1,40 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/themes.dart';
-import 'package:championforms/models/field_types/formfieldclass.dart';
-import 'package:championforms/models/file_model.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
+import 'package:intl/intl.dart';
 
 /// A custom field that displays a date picker widget.
 ///
-/// Allows users to select a date using ShadCN Flutter's DatePicker component.
-/// Supports both popover and dialog modes for date selection.
+/// Allows users to select a date or date range using ShadCN Flutter's DatePicker
+/// or DateRangePicker component.
 ///
-/// Value type: `DateTime`
-/// Converter: `DateTimeConverters` (ISO 8601 string format)
+/// The field stores a FieldOption where:
+/// - For single date: value = ISO 8601 string, additionalData = DateTime
+/// - For date range: value = "start ISO / end ISO", additionalData = shadcn.DateTimeRange
 ///
 /// ## Usage
 ///
 /// ```dart
+/// // Single date picker
 /// final dateField = ShadcnDatePickerField(
 ///   id: 'birthdate',
 ///   title: 'Date of Birth',
 ///   description: 'Select your birth date',
-///   defaultValue: DateTime.now(),
-///   validators: [
-///     form.Validator(
-///       validator: (results) {
-///         final date = results.getAsRaw<DateTime>('birthdate');
-///         return date != null && date.isBefore(DateTime.now());
-///       },
-///       reason: 'Birth date must be in the past',
-///     ),
-///   ],
+///   isRangeSelector: false,
+///   defaultValue: ShadcnDatePickerWidget.fromDateTime(DateTime.now()),
+/// );
+///
+/// // Date range picker
+/// final rangeField = ShadcnDatePickerField(
+///   id: 'event_dates',
+///   title: 'Event Dates',
+///   isRangeSelector: true,
+///   defaultValue: null,
 /// );
 /// ```
-class ShadcnDatePickerField extends Field {
+class ShadcnDatePickerField extends form.Field {
+  /// Whether this picker selects a date range (true) or single date (false)
+  final bool isRangeSelector;
+
   @override
-  final DateTime? defaultValue;
+  final form.FieldOption? defaultValue;
 
   ShadcnDatePickerField({
     required super.id,
@@ -50,6 +54,7 @@ class ShadcnDatePickerField extends Field {
     super.theme,
     super.fieldLayout,
     super.fieldBackground,
+    this.isRangeSelector = false,
     this.defaultValue,
   });
 
@@ -58,27 +63,34 @@ class ShadcnDatePickerField extends Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is DateTime) return value.toIso8601String();
-        if (value == null) return '';
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return value.value;
+    if (value == null) return '';
+    throw TypeError();
+  };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is DateTime) return [value.toIso8601String()];
-        if (value == null) return [];
-        throw TypeError();
-      };
+    if (value is form.FieldOption) {
+      // For date ranges, split the "start / end" string
+      if (value.value.contains(' / ')) {
+        return value.value.split(' / ');
+      }
+      return [value.value];
+    }
+    if (value == null) return [];
+    throw TypeError();
+  };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is DateTime) return true;
-        if (value == null) return false;
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return true;
+    if (value == null) return false;
+    throw TypeError();
+  };
 
   @override
-  List<FileModel>? Function(dynamic value)? get asFileListConverter => null;
+  List<form.FileModel>? Function(dynamic value)? get asFileListConverter =>
+      null;
 }
 
 /// Date picker field using ShadCN Flutter's DatePicker component.
@@ -101,75 +113,98 @@ class ShadcnDatePickerField extends Field {
 class ShadcnDatePickerWidget extends form.StatefulFieldWidget {
   const ShadcnDatePickerWidget({super.key, required super.context});
 
+  // Helper method to extract DateTime from FieldOption
+  static DateTime? extractDateTime(form.FieldOption? option) {
+    return option?.additionalData as DateTime?;
+  }
+
+  // Helper method to extract DateTimeRange from FieldOption
+  static shadcn.DateTimeRange? extractDateTimeRange(form.FieldOption? option) {
+    return option?.additionalData as shadcn.DateTimeRange?;
+  }
+
+  // Helper method to create FieldOption from DateTime
+  static form.FieldOption fromDateTime(DateTime date) {
+    return form.FieldOption(
+      value: date.toIso8601String(),
+      label: DateFormat('yyyy-MM-dd').format(date),
+      additionalData: date,
+    );
+  }
+
+  // Helper method to create FieldOption from DateTimeRange
+  static form.FieldOption fromDateTimeRange(shadcn.DateTimeRange range) {
+    return form.FieldOption(
+      value:
+          '${range.start.toIso8601String()} / ${range.end.toIso8601String()}',
+      label:
+          '${DateFormat('yyyy-MM-dd').format(range.start)} - ${DateFormat('yyyy-MM-dd').format(range.end)}',
+      additionalData: range,
+    );
+  }
+
   @override
   Widget buildWithTheme(
     BuildContext buildContext,
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final value = ctx.getValue<DateTime>();
-    final errors = ctx.controller.findErrors(ctx.field.id);
-    final hasError = errors.isNotEmpty;
-    final errorColors = theme.errorColorScheme ?? ctx.colors;
+    final field = ctx.field as ShadcnDatePickerField;
+    final fieldOption = ctx.getValue<form.FieldOption?>();
 
     return Column(
+      key: ValueKey('datepicker_col_${ctx.field.id}'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title (if present)
-        if (ctx.field.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              ctx.field.title!,
-              style: theme.titleStyle?.copyWith(
-                color: hasError ? errorColors.titleColor : null,
-              ),
-            ),
-          ),
+        if (!field.isRangeSelector)
+          _buildSingleDatePicker(ctx, fieldOption)
+        else
+          _buildDateRangePicker(ctx, fieldOption),
+      ],
+    );
+  }
 
-        // Date Picker Widget
-        Container(
-          decoration: BoxDecoration(
-            border: hasError
-                ? Border.all(
-                    color: errorColors.borderColor,
-                    width: errorColors.borderSize.toDouble(),
-                  )
-                : null,
-            borderRadius: hasError ? errorColors.borderRadius : null,
-          ),
-          child: shadcn.DatePicker(
-            key: ValueKey('datepicker_${ctx.field.id}'),
-            value: value,
-            mode: shadcn.PromptMode.popover,
-            onChanged: (newValue) {
+  Widget _buildSingleDatePicker(
+    form.FieldBuilderContext ctx,
+    form.FieldOption? fieldOption,
+  ) {
+    final value = extractDateTime(fieldOption);
+
+    return shadcn.DatePicker(
+      key: ValueKey('datepicker_${ctx.field.id}'),
+      value: value,
+      mode: shadcn.PromptMode.popover,
+      onChanged: ctx.field.disabled
+          ? null
+          : (newValue) {
               if (newValue != null) {
-                ctx.setValue<DateTime>(newValue);
+                final option = fromDateTime(newValue);
+                debugPrint(option.toString());
+                ctx.setValue<form.FieldOption?>(option);
               }
             },
-          ),
-        ),
+    );
+  }
 
-        // Description (if present)
-        if (ctx.field.description != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(ctx.field.description!, style: theme.hintTextStyle),
-          ),
+  Widget _buildDateRangePicker(
+    form.FieldBuilderContext ctx,
+    form.FieldOption? fieldOption,
+  ) {
+    final value = extractDateTimeRange(fieldOption);
 
-        // Error messages
-        if (hasError)
-          ...errors.map((error) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.reason,
-                  style: TextStyle(
-                    color: errorColors.textColor,
-                    fontSize: 12.0,
-                  ),
-                ),
-              )),
-      ],
+    return shadcn.DateRangePicker(
+      key: ValueKey('daterangepicker_${ctx.field.id}'),
+      value: value,
+      mode: shadcn.PromptMode.popover,
+      onChanged: ctx.field.disabled
+          ? null
+          : (newValue) {
+              if (newValue != null) {
+                final option = fromDateTimeRange(newValue);
+                debugPrint(option.additionalData.toString());
+                ctx.setValue<form.FieldOption?>(option);
+              }
+            },
     );
   }
 

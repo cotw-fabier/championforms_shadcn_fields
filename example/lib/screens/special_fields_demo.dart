@@ -36,7 +36,9 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
       debugPrint('Comments: ${results.grab('comments').asString()}');
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Form submitted! Check console for values.')),
+        const SnackBar(
+          content: Text('Form submitted! Check console for values.'),
+        ),
       );
     } else {
       debugPrint('Form has errors:');
@@ -44,9 +46,9 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
         debugPrint('  ${error.fieldId}: ${error.reason}');
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fix form errors')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please fix form errors')));
     }
   }
 
@@ -60,16 +62,20 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
         id: 'event_date',
         title: 'Event Date',
         description: 'Select a future event date',
-        defaultValue: DateTime.now(),
+        defaultValue: null,
+        isRangeSelector: true,
         validateLive: false, // Only validates on submit
         validators: [
           form.Validator(
             validator: (value) {
-              if (value is! DateTime) return false;
+              // value is FieldOption, extract DateTime from additionalData
+              if (value is! form.FieldOption) return false;
+              final date = ShadcnDatePickerWidget.extractDateTime(value);
+              if (date == null) return false;
               // Check if date is in the future (ignoring time)
               final now = DateTime.now();
               final today = DateTime(now.year, now.month, now.day);
-              final selectedDate = DateTime(value.year, value.month, value.day);
+              final selectedDate = DateTime(date.year, date.month, date.day);
               return selectedDate.isAfter(today);
             },
             reason: 'Event date must be in the future',
@@ -125,10 +131,7 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Special Fields'),
-        elevation: 1,
-      ),
+      appBar: AppBar(title: const Text('Special Fields'), elevation: 1),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -160,10 +163,22 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 4),
-                  Text('• Event Date: Must be in the future (submit validation)', style: TextStyle(fontSize: 13)),
-                  Text('• Event Time: Required selection (submit validation)', style: TextStyle(fontSize: 13)),
-                  Text('• Theme Color: Required selection (submit validation)', style: TextStyle(fontSize: 13)),
-                  Text('• Comments: Minimum 20 characters (live validation)', style: TextStyle(fontSize: 13)),
+                  Text(
+                    '• Event Date: Must be in the future (submit validation)',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  Text(
+                    '• Event Time: Required selection (submit validation)',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  Text(
+                    '• Theme Color: Required selection (submit validation)',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  Text(
+                    '• Comments: Minimum 20 characters (live validation)',
+                    style: TextStyle(fontSize: 13),
+                  ),
                 ],
               ),
             ),
@@ -185,17 +200,28 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   SizedBox(height: 12),
-                  Text('Text Input Fields:', style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text(
+                    'Text Input Fields:',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   Text('• shadcn_text_input, shadcn_text_area'),
                   Text('• shadcn_formatted_input, shadcn_phone_input'),
                   Text('• shadcn_autocomplete, shadcn_input_otp'),
                   SizedBox(height: 8),
-                  Text('Selection Fields:', style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text(
+                    'Selection Fields:',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   Text('• shadcn_checkbox, shadcn_switch, shadcn_toggle'),
                   Text('• shadcn_radio_group, shadcn_radio_card'),
-                  Text('• shadcn_select, shadcn_multiselect, shadcn_item_picker'),
+                  Text(
+                    '• shadcn_select, shadcn_multiselect, shadcn_item_picker',
+                  ),
                   SizedBox(height: 8),
-                  Text('Numeric & Special Fields:', style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text(
+                    'Numeric & Special Fields:',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   Text('• shadcn_chip_input, shadcn_number_input'),
                   Text('• shadcn_slider, shadcn_star_rating'),
                   Text('• shadcn_date_picker, shadcn_time_picker'),

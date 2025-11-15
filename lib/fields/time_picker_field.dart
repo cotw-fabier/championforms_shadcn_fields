@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/themes.dart';
-import 'package:championforms/models/field_types/formfieldclass.dart';
-import 'package:championforms/models/file_model.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 /// A custom field that displays a time picker widget.
@@ -10,8 +8,10 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// Allows users to select a time using ShadCN Flutter's TimePicker component.
 /// Supports both popover and dialog modes for time selection.
 ///
-/// Value type: `shadcn.TimeOfDay` (from shadcn_flutter package)
-/// Converter: `TimeConverters` (HH:mm string format)
+/// The field stores a FieldOption where:
+/// - value: HH:mm string format
+/// - label: HH:mm string format
+/// - additionalData: shadcn.TimeOfDay object
 ///
 /// ## Usage
 ///
@@ -20,21 +20,12 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   id: 'appointment_time',
 ///   title: 'Appointment Time',
 ///   description: 'Select a time for your appointment',
-///   defaultValue: shadcn.TimeOfDay(hour: 9, minute: 0),
-///   validators: [
-///     form.Validator(
-///       validator: (results) {
-///         final time = results.getAsRaw<shadcn.TimeOfDay>('appointment_time');
-///         return time != null && time.hour >= 9 && time.hour < 17;
-///       },
-///       reason: 'Appointment must be between 9 AM and 5 PM',
-///     ),
-///   ],
+///   defaultValue: ShadcnTimePickerWidget.fromTimeOfDay(shadcn.TimeOfDay(hour: 9, minute: 0)),
 /// );
 /// ```
-class ShadcnTimePickerField extends Field {
+class ShadcnTimePickerField extends form.Field {
   @override
-  final shadcn.TimeOfDay? defaultValue;
+  final form.FieldOption? defaultValue;
 
   ShadcnTimePickerField({
     required super.id,
@@ -58,31 +49,27 @@ class ShadcnTimePickerField extends Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is shadcn.TimeOfDay) {
-          return '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
-        }
+        if (value is form.FieldOption) return value.value;
         if (value == null) return '';
         throw TypeError();
       };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is shadcn.TimeOfDay) {
-          return ['${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}'];
-        }
+        if (value is form.FieldOption) return [value.value];
         if (value == null) return [];
         throw TypeError();
       };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is shadcn.TimeOfDay) return true;
+        if (value is form.FieldOption) return true;
         if (value == null) return false;
         throw TypeError();
       };
 
   @override
-  List<FileModel>? Function(dynamic value)? get asFileListConverter => null;
+  List<form.FileModel>? Function(dynamic value)? get asFileListConverter => null;
 }
 
 /// Time picker field using ShadCN Flutter's TimePicker component.
@@ -103,7 +90,24 @@ class ShadcnTimePickerField extends Field {
 /// )
 /// ```
 class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
-  const ShadcnTimePickerWidget({required super.context});
+  const ShadcnTimePickerWidget({required super.context, super.key});
+
+  // Helper method to extract TimeOfDay from FieldOption
+  static shadcn.TimeOfDay? extractTimeOfDay(form.FieldOption? option) {
+    return option?.additionalData as shadcn.TimeOfDay?;
+  }
+
+  // Helper method to create FieldOption from TimeOfDay
+  static form.FieldOption fromTimeOfDay(shadcn.TimeOfDay time) {
+    final hourStr = time.hour.toString().padLeft(2, '0');
+    final minStr = time.minute.toString().padLeft(2, '0');
+    final timeStr = '$hourStr:$minStr';
+    return form.FieldOption(
+      value: timeStr,
+      label: timeStr,
+      additionalData: time,
+    );
+  }
 
   @override
   Widget buildWithTheme(
@@ -111,69 +115,26 @@ class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final value = ctx.getValue<shadcn.TimeOfDay>() ?? shadcn.TimeOfDay.now();
-    final errors = ctx.controller.findErrors(ctx.field.id);
-    final hasError = errors.isNotEmpty;
-    final errorColors = theme.errorColorScheme ?? ctx.colors;
+    final fieldOption = ctx.getValue<form.FieldOption?>();
+    final value = extractTimeOfDay(fieldOption) ?? shadcn.TimeOfDay.now();
 
     return Column(
+      key: ValueKey('timepicker_col_${ctx.field.id}'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title (if present)
-        if (ctx.field.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              ctx.field.title!,
-              style: theme.titleStyle?.copyWith(
-                color: hasError ? errorColors.titleColor : null,
-              ),
-            ),
-          ),
-
-        // Time Picker Widget
-        Container(
-          decoration: BoxDecoration(
-            border: hasError
-                ? Border.all(
-                    color: errorColors.borderColor,
-                    width: errorColors.borderSize.toDouble(),
-                  )
-                : null,
-            borderRadius: hasError ? errorColors.borderRadius : null,
-          ),
-          child: shadcn.TimePicker(
-            key: ValueKey('timepicker_${ctx.field.id}'),
-            value: value,
-            mode: shadcn.PromptMode.popover,
-            onChanged: (newValue) {
-              // Update the time value
-              if (newValue != null) {
-                ctx.setValue<shadcn.TimeOfDay>(newValue);
-              }
-            },
-          ),
+        shadcn.TimePicker(
+          key: ValueKey('timepicker_${ctx.field.id}'),
+          value: value,
+          mode: shadcn.PromptMode.popover,
+          onChanged: ctx.field.disabled
+              ? null
+              : (newValue) {
+                  if (newValue != null) {
+                    final option = fromTimeOfDay(newValue);
+                    ctx.setValue<form.FieldOption?>(option);
+                  }
+                },
         ),
-
-        // Description (if present)
-        if (ctx.field.description != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(ctx.field.description!, style: theme.hintTextStyle),
-          ),
-
-        // Error messages
-        if (hasError)
-          ...errors.map((error) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.reason,
-                  style: TextStyle(
-                    color: errorColors.textColor,
-                    fontSize: 12.0,
-                  ),
-                ),
-              )),
       ],
     );
   }

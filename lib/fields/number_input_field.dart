@@ -14,7 +14,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///
 /// Example:
 /// ```dart
-/// ShadcnNumberInputField(
+/// NumberInputField(
 ///   id: 'quantity',
 ///   title: 'Quantity',
 ///   placeholder: 'Enter quantity',
@@ -24,7 +24,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: 0,
 /// )
 /// ```
-class ShadcnNumberInputField extends form.Field {
+class NumberInputField extends form.Field {
   /// Placeholder text for the input field.
   final String? placeholder;
 
@@ -66,7 +66,7 @@ class ShadcnNumberInputField extends form.Field {
   @override
   final num? defaultValue;
 
-  ShadcnNumberInputField({
+  NumberInputField({
     required super.id,
     super.title,
     super.description,
@@ -176,7 +176,7 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
   dynamic _lastValue;
 
   // Get field-specific properties
-  ShadcnNumberInputField get _field => widget.context.field as ShadcnNumberInputField;
+  NumberInputField get _field => widget.context.field as NumberInputField;
 
   @override
   void initState() {

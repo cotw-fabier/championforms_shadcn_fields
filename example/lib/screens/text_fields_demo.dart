@@ -5,6 +5,7 @@ import 'package:championforms_shadcn_fields/fields/phone_input_field.dart';
 import 'package:championforms_shadcn_fields/fields/text_area_field.dart';
 import 'package:championforms_shadcn_fields/fields/text_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldsDemo extends StatefulWidget {
   const TextFieldsDemo({super.key});
@@ -62,12 +63,16 @@ class _TextFieldsDemoState extends State<TextFieldsDemo> {
 
     final fields = [
       // Text Input Field
-      ShadcnTextInputField(
+      TextInputField(
         id: 'email',
 
         title: 'Email Address',
         // hintText: 'Enter your email',
         description: 'Standard text input field using ShadCN',
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@._\-+]')),
+        ],
+        keyboardType: TextInputType.emailAddress,
         // maxLines: 1,
         validateLive: true,
         validators: [
@@ -83,7 +88,7 @@ class _TextFieldsDemoState extends State<TextFieldsDemo> {
       ),
 
       // Text Area Field (using TextField with maxLines)
-      ShadcnTextAreaField(
+      TextAreaField(
         id: 'bio',
         title: 'Biography',
         // hintText: 'Tell us about yourself...',
@@ -102,7 +107,7 @@ class _TextFieldsDemoState extends State<TextFieldsDemo> {
       ),
 
       // Phone Input using ShadCN PhoneInput
-      ShadcnPhoneInputField(
+      PhoneInputField(
         id: 'phone',
         title: 'Phone Number',
         description: 'Phone number input with country selector',
@@ -118,7 +123,7 @@ class _TextFieldsDemoState extends State<TextFieldsDemo> {
       ),
 
       // Search field using ShadCN AutoComplete
-      ShadcnAutoCompleteField(
+      AutoCompleteField(
         id: 'search',
         title: 'Search Topics',
         placeholder: 'Start typing to search...',

@@ -65,7 +65,7 @@ class _SelectionFieldsDemoState extends State<SelectionFieldsDemo> {
 
     final fields = [
       // Checkbox Field
-      ShadcnCheckboxField(
+      CheckboxField(
         id: 'terms',
         title: 'Terms and Conditions',
         description: 'Please review and accept the following:',
@@ -101,7 +101,7 @@ class _SelectionFieldsDemoState extends State<SelectionFieldsDemo> {
       ),
 
       // Switch Field
-      ShadcnSwitchField(
+      SwitchField(
         id: 'newsletter',
         title: "Switch Field",
         options: [
@@ -118,7 +118,7 @@ class _SelectionFieldsDemoState extends State<SelectionFieldsDemo> {
       ),
 
       // Select Field - single-select mode (default)
-      ShadcnSelectField(
+      SelectField(
         id: 'framework',
         title: 'Select Framework (Single)',
         description: 'Choose your preferred framework (required)',
@@ -144,7 +144,7 @@ class _SelectionFieldsDemoState extends State<SelectionFieldsDemo> {
       ),
 
       // Select Field - multi-select mode (using same field with multiselect: true)
-      ShadcnSelectField(
+      SelectField(
         id: 'frameworks_multi',
         title: 'Select Frameworks (Multi)',
         description: 'Choose multiple frameworks',
@@ -160,7 +160,7 @@ class _SelectionFieldsDemoState extends State<SelectionFieldsDemo> {
       ),
 
       // Radio Group Field
-      ShadcnRadioGroupField(
+      RadioGroupField(
         id: 'platform',
         title: 'Target Platform',
         description: 'Select your deployment platform',
@@ -174,7 +174,7 @@ class _SelectionFieldsDemoState extends State<SelectionFieldsDemo> {
       ),
 
       // Radio Card Field - submit-time validation
-      ShadcnRadioCardField(
+      RadioCardField(
         id: 'pricing',
         title: 'Select Plan',
         description: 'Choose a pricing plan (required)',

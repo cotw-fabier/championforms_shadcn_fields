@@ -10,7 +10,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final switchField = ShadcnSwitchField(
+/// final switchField = SwitchField(
 ///   id: 'preferences',
 ///   title: 'Select Your Preferences',
 ///   description: 'Choose one or more options',
@@ -23,7 +23,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   labelOnLeft: false, // labels appear on the right (trailing)
 /// );
 /// ```
-class ShadcnSwitchField extends form.OptionSelect {
+class SwitchField extends form.OptionSelect {
   /// Whether labels should appear on the left (leading) or right (trailing) of the switch.
   /// Defaults to false (labels on the right).
   final bool labelOnLeft;
@@ -46,7 +46,7 @@ class ShadcnSwitchField extends form.OptionSelect {
   /// Corner radius
   final BorderRadiusGeometry? borderRadius;
 
-  ShadcnSwitchField({
+  SwitchField({
     required super.id,
     super.title,
     super.description,
@@ -87,7 +87,7 @@ class ShadcnSwitchField extends form.OptionSelect {
 ///
 /// Example:
 /// ```dart
-/// ShadcnSwitchField(
+/// SwitchField(
 ///   id: 'preferences',
 ///   title: 'Notification Preferences',
 ///   description: 'Select your preferred notification methods',
@@ -116,7 +116,7 @@ class ShadcnSwitchWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
   ) {
     // Get options from the OptionSelect field
-    final field = ctx.field as ShadcnSwitchField;
+    final field = ctx.field as SwitchField;
     final options = field.options ?? [];
 
     return Column(

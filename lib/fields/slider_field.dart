@@ -13,7 +13,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///
 /// Example (single value):
 /// ```dart
-/// ShadcnSliderField(
+/// SliderField(
 ///   id: 'volume',
 ///   title: 'Volume',
 ///   min: 0.0,
@@ -25,7 +25,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///
 /// Example (range):
 /// ```dart
-/// ShadcnSliderField(
+/// SliderField(
 ///   id: 'price_range',
 ///   title: 'Price Range',
 ///   min: 0.0,
@@ -34,7 +34,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   initialRange: [100.0, 500.0],
 /// )
 /// ```
-class ShadcnSliderField extends form.Field {
+class SliderField extends form.Field {
   /// Minimum value of the slider.
   final double min;
 
@@ -59,7 +59,7 @@ class ShadcnSliderField extends form.Field {
   @override
   final shadcn.SliderValue? defaultValue;
 
-  ShadcnSliderField({
+  SliderField({
     required super.id,
     super.title,
     super.description,
@@ -185,8 +185,8 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get field from ShadcnSliderField
-    final field = ctx.field as ShadcnSliderField;
+    // Get field from SliderField
+    final field = ctx.field as SliderField;
 
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;

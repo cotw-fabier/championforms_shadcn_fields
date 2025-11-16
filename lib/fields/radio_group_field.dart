@@ -10,7 +10,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final genderField = ShadcnRadioGroupField(
+/// final genderField = RadioGroupField(
 ///   id: 'gender',
 ///   title: 'Gender',
 ///   description: 'Select your gender',
@@ -22,8 +22,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: [], // Empty list = no selection
 /// );
 /// ```
-class ShadcnRadioGroupField extends form.OptionSelect {
-  ShadcnRadioGroupField({
+class RadioGroupField extends form.OptionSelect {
+  RadioGroupField({
     required super.id,
     super.title,
     super.description,
@@ -56,7 +56,7 @@ class ShadcnRadioGroupField extends form.OptionSelect {
 ///
 /// Example:
 /// ```dart
-/// ShadcnRadioGroupField(
+/// RadioGroupField(
 ///   id: 'gender',
 ///   title: 'Gender',
 ///   description: 'Select your gender',

@@ -60,7 +60,7 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
       // Date Picker Field - submit-time validation (future date)
       // TODO: This field is bugged in the upstream ShadCN_Flutter Library
       // will need to wait for fixes before fully integrating
-      ShadcnDatePickerField(
+      DatePickerField(
         id: 'event_date',
         title: 'Event Date',
         description: 'Select a future event date',
@@ -88,7 +88,7 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
       // Time Picker Field - submit-time validation
       // TODO: This field is bugged in the upstream ShadCN_Flutter Library
       // will need to wait for fixes before fully integrating
-      ShadcnTimePickerField(
+      TimePickerField(
         id: 'event_time',
         title: 'Event Time',
         description: 'Select the event time (required)',
@@ -102,7 +102,7 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
       ),
 
       // Color Picker Field - submit-time validation
-      ShadcnColorPickerField(
+      ColorPickerField(
         id: 'theme_color',
         title: 'Theme Color',
         description: 'Choose your theme color (required)',
@@ -116,7 +116,7 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
       ),
 
       // Text Area for Comments - live validation
-      ShadcnTextAreaField(
+      TextAreaField(
         id: 'comments',
         title: 'Additional Comments',
         description: 'Share your thoughts (min 20 characters)',

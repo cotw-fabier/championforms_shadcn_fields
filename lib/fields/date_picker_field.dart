@@ -19,7 +19,7 @@ import 'package:intl/intl.dart';
 ///
 /// ```dart
 /// // Single date picker
-/// final dateField = ShadcnDatePickerField(
+/// final dateField = DatePickerField(
 ///   id: 'birthdate',
 ///   title: 'Date of Birth',
 ///   description: 'Select your birth date',
@@ -28,14 +28,14 @@ import 'package:intl/intl.dart';
 /// );
 ///
 /// // Date range picker
-/// final rangeField = ShadcnDatePickerField(
+/// final rangeField = DatePickerField(
 ///   id: 'event_dates',
 ///   title: 'Event Dates',
 ///   isRangeSelector: true,
 ///   defaultValue: null,
 /// );
 /// ```
-class ShadcnDatePickerField extends form.Field {
+class DatePickerField extends form.Field {
   /// Whether this picker selects a date range (true) or single date (false)
   final bool isRangeSelector;
 
@@ -69,7 +69,7 @@ class ShadcnDatePickerField extends form.Field {
   @override
   final form.FieldOption? defaultValue;
 
-  ShadcnDatePickerField({
+  DatePickerField({
     required super.id,
     super.title,
     super.description,
@@ -187,7 +187,7 @@ class ShadcnDatePickerWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnDatePickerField;
+    final field = ctx.field as DatePickerField;
     final fieldOption = ctx.getValue<form.FieldOption?>();
 
     return Column(
@@ -206,7 +206,7 @@ class ShadcnDatePickerWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
     form.FieldOption? fieldOption,
   ) {
-    final field = ctx.field as ShadcnDatePickerField;
+    final field = ctx.field as DatePickerField;
     final value = extractDateTime(fieldOption);
 
     return shadcn.DatePicker(
@@ -237,7 +237,7 @@ class ShadcnDatePickerWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
     form.FieldOption? fieldOption,
   ) {
-    final field = ctx.field as ShadcnDatePickerField;
+    final field = ctx.field as DatePickerField;
     final value = extractDateTimeRange(fieldOption);
 
     return shadcn.DateRangePicker(

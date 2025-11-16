@@ -56,7 +56,7 @@ class _NumericFieldsDemoState extends State<NumericFieldsDemo> {
 
     final fields = [
       // Chip/Tag Input Field
-      ShadcnChipInputField(
+      ChipInputField(
         id: 'tags',
         title: 'Tags',
         description: 'Add tags by typing and pressing Enter',
@@ -83,7 +83,7 @@ class _NumericFieldsDemoState extends State<NumericFieldsDemo> {
       ),
 
       // Number Input Field
-      ShadcnNumberInputField(
+      NumberInputField(
         id: 'quantity',
         title: 'Quantity',
         description: 'Enter a quantity between 1 and 100',
@@ -104,7 +104,7 @@ class _NumericFieldsDemoState extends State<NumericFieldsDemo> {
       ),
 
       // Slider Field - submit-time validation
-      ShadcnSliderField(
+      SliderField(
         id: 'volume',
         title: 'Volume',
         description: 'Adjust the volume level (min 30)',
@@ -128,7 +128,7 @@ class _NumericFieldsDemoState extends State<NumericFieldsDemo> {
       ),
 
       // Star Rating Field
-      ShadcnStarRatingField(
+      StarRatingField(
         id: 'rating',
         title: 'Rate Your Experience',
         description: 'Click to rate',

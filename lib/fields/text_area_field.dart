@@ -13,7 +13,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final textAreaField = ShadcnTextAreaField(
+/// final textAreaField = TextAreaField(
 ///   id: 'description',
 ///   title: 'Description',
 ///   description: 'Enter a detailed description',
@@ -26,7 +26,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   ],
 /// );
 /// ```
-class ShadcnTextAreaField extends form.Field {
+class TextAreaField extends form.Field {
   @override
   final String? defaultValue;
 
@@ -54,9 +54,10 @@ class ShadcnTextAreaField extends form.Field {
   final double? minHeight;
   final double? maxHeight;
   final bool? expandableHeight;
+  final bool? expandableWidth;
   final double? initialHeight;
 
-  ShadcnTextAreaField({
+  TextAreaField({
     required super.id,
     super.title,
     super.description,
@@ -92,6 +93,7 @@ class ShadcnTextAreaField extends form.Field {
     this.minHeight,
     this.maxHeight,
     this.expandableHeight,
+    this.expandableWidth,
     this.initialHeight,
   });
 
@@ -147,7 +149,7 @@ class ShadcnTextAreaWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnTextAreaField;
+    final field = ctx.field as TextAreaField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
@@ -181,8 +183,8 @@ class ShadcnTextAreaWidget extends form.StatefulFieldWidget {
             placeholder: field.hintText != null
                 ? Text(field.hintText!)
                 : (ctx.field.description != null
-                    ? Text(ctx.field.description!)
-                    : null),
+                      ? Text(ctx.field.description!)
+                      : null),
             enabled: !ctx.field.disabled,
             onChanged: (value) {
               ctx.setValue(value);
@@ -207,6 +209,7 @@ class ShadcnTextAreaWidget extends form.StatefulFieldWidget {
             minHeight: field.minHeight ?? 0,
             maxHeight: field.maxHeight ?? double.infinity,
             expandableHeight: field.expandableHeight ?? true,
+            expandableWidth: field.expandableWidth ?? false,
             initialHeight: field.initialHeight ?? 150,
           ),
         ),

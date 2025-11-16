@@ -10,7 +10,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final checkboxField = ShadcnCheckboxField(
+/// final checkboxField = CheckboxField(
 ///   id: 'preferences',
 ///   title: 'Select Your Preferences',
 ///   description: 'Choose one or more options',
@@ -22,7 +22,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: [], // none checked by default
 /// );
 /// ```
-class ShadcnCheckboxField extends form.OptionSelect {
+class CheckboxField extends form.OptionSelect {
   /// Widget displayed before checkbox square
   @override
   final Widget? leading;
@@ -45,7 +45,7 @@ class ShadcnCheckboxField extends form.OptionSelect {
   /// Corner radius of checkbox
   final BorderRadiusGeometry? borderRadius;
 
-  ShadcnCheckboxField({
+  CheckboxField({
     required super.id,
     super.title,
     super.description,
@@ -86,7 +86,7 @@ class ShadcnCheckboxField extends form.OptionSelect {
 ///
 /// Example:
 /// ```dart
-/// ShadcnCheckboxField(
+/// CheckboxField(
 ///   id: 'preferences',
 ///   title: 'Notification Preferences',
 ///   description: 'Select your preferred notification methods',
@@ -106,7 +106,7 @@ class ShadcnCheckboxWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
   ) {
     // Get options from the OptionSelect field
-    final field = ctx.field as ShadcnCheckboxField;
+    final field = ctx.field as CheckboxField;
     final options = field.options ?? [];
 
     return Column(

@@ -10,7 +10,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final toggleField = ShadcnToggleField(
+/// final toggleField = ToggleField(
 ///   id: 'dark_mode',
 ///   title: 'Dark Mode',
 ///   description: 'Enable dark mode theme',
@@ -18,7 +18,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: null, // not toggled by default
 /// );
 /// ```
-class ShadcnToggleField extends form.Field {
+class ToggleField extends form.Field {
   /// The FieldOption to store when toggle is pressed.
   /// Defaults to FieldOption(label: 'Toggled', value: 'true')
   final form.FieldOption? checkedOption;
@@ -30,7 +30,7 @@ class ShadcnToggleField extends form.Field {
   @override
   final Widget? icon;
 
-  ShadcnToggleField({
+  ToggleField({
     required super.id,
     super.title,
     super.description,
@@ -121,8 +121,8 @@ class ShadcnToggleWidget extends form.StatefulFieldWidget {
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
 
-    // Cast to ShadcnToggleField to access custom properties
-    final field = ctx.field as ShadcnToggleField;
+    // Cast to ToggleField to access custom properties
+    final field = ctx.field as ToggleField;
 
     // Use provided checkedOption or default
     final defaultToggled = form.FieldOption(label: 'Toggled', value: 'true');

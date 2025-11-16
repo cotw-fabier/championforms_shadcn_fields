@@ -12,7 +12,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///
 /// ```dart
 /// // Single-select mode
-/// final fruitField = ShadcnSelectField(
+/// final fruitField = SelectField(
 ///   id: 'fruit',
 ///   title: 'Select a Fruit',
 ///   options: [
@@ -25,7 +25,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// );
 ///
 /// // Multi-select mode
-/// final fruitsField = ShadcnSelectField(
+/// final fruitsField = SelectField(
 ///   id: 'fruits',
 ///   title: 'Select Fruits',
 ///   options: [
@@ -36,11 +36,11 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: [],
 /// );
 /// ```
-class ShadcnSelectField extends form.OptionSelect {
+class SelectField extends form.OptionSelect {
   /// Full constraint control for popover/constraints.
   final BoxConstraints? popoverConstraints;
 
-  ShadcnSelectField({
+  SelectField({
     required super.id,
     super.title,
     super.description,
@@ -76,7 +76,7 @@ class ShadcnSelectField extends form.OptionSelect {
 ///
 /// Example:
 /// ```dart
-/// ShadcnSelectField(
+/// SelectField(
 ///   id: 'fruit',
 ///   title: 'Select a Fruit',
 ///   options: [
@@ -98,8 +98,8 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get options from the ShadcnSelectField
-    final field = ctx.field as ShadcnSelectField;
+    // Get options from the SelectField
+    final field = ctx.field as SelectField;
     final options = field.options ?? [];
 
     // Check if multiselect mode is enabled
@@ -121,7 +121,7 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
   Widget _buildSingleSelect(
     form.FieldBuilderContext ctx,
     List<form.FieldOption> options,
-    ShadcnSelectField field,
+    SelectField field,
   ) {
     // OptionSelect stores as List, even in single-select mode
     final value = ctx.getValue<List<form.FieldOption>>();
@@ -189,7 +189,7 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
   Widget _buildMultiSelect(
     form.FieldBuilderContext ctx,
     List<form.FieldOption> options,
-    ShadcnSelectField field,
+    SelectField field,
   ) {
     final value = ctx.getValue<List<form.FieldOption>>();
 

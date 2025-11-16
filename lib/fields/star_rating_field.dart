@@ -16,7 +16,7 @@ import '../converters/star_rating_option_converters.dart';
 /// ## Usage
 ///
 /// ```dart
-/// final ratingField = ShadcnStarRatingField(
+/// final ratingField = StarRatingField(
 ///   id: 'satisfaction',
 ///   title: 'How satisfied are you?',
 ///   description: 'Rate from 1 to 5 stars',
@@ -49,7 +49,7 @@ import '../converters/star_rating_option_converters.dart';
 /// // Check if rating exists
 /// final hasRating = results.grab('satisfaction').asBool();
 /// ```
-class ShadcnStarRatingField extends form.Field {
+class StarRatingField extends form.Field {
   @override
   final form.FieldOption? defaultValue;
 
@@ -71,7 +71,7 @@ class ShadcnStarRatingField extends form.Field {
   /// Spacing between stars
   final double? starSpacing;
 
-  ShadcnStarRatingField({
+  StarRatingField({
     required super.id,
     super.title,
     super.description,
@@ -152,8 +152,8 @@ class ShadcnStarRatingWidget extends form.StatefulFieldWidget {
     final fieldOption = ctx.getValue<form.FieldOption?>();
     final value = StarRatingOptionConverters.extractRating(fieldOption) ?? 0.0;
 
-    // Cast to ShadcnStarRatingField to access custom properties
-    final field = ctx.field as ShadcnStarRatingField;
+    // Cast to StarRatingField to access custom properties
+    final field = ctx.field as StarRatingField;
 
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;

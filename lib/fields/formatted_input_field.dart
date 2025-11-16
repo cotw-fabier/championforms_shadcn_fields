@@ -11,7 +11,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final dateField = ShadcnFormattedInputField(
+/// final dateField = FormattedInputField(
 ///   id: 'date',
 ///   title: 'Date of Birth',
 ///   parts: [
@@ -24,7 +24,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   separator: '/',
 /// );
 /// ```
-class ShadcnFormattedInputField extends form.Field {
+class FormattedInputField extends form.Field {
   /// The input parts that make up the formatted input.
   final List<shadcn.InputPart> parts;
 
@@ -54,7 +54,7 @@ class ShadcnFormattedInputField extends form.Field {
   final BorderRadiusGeometry? borderRadius;
   final bool? filled;
 
-  ShadcnFormattedInputField({
+  FormattedInputField({
     required super.id,
     super.title,
     super.description,

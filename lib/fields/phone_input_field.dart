@@ -11,13 +11,13 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final phoneField = ShadcnPhoneInputField(
+/// final phoneField = PhoneInputField(
 ///   id: 'phone',
 ///   title: 'Phone Number',
 ///   initialCountry: shadcn.Country.unitedStates,
 /// );
 /// ```
-class ShadcnPhoneInputField extends form.Field {
+class PhoneInputField extends form.Field {
   /// The initial country to display in the country selector.
   final shadcn.Country? initialCountry;
 
@@ -50,7 +50,7 @@ class ShadcnPhoneInputField extends form.Field {
   final Widget? leading;
   final Widget? trailing;
 
-  ShadcnPhoneInputField({
+  PhoneInputField({
     required super.id,
     super.title,
     super.description,

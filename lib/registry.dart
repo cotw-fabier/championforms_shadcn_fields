@@ -39,20 +39,20 @@ class ShadcnFieldRegistry {
   /// are created.
   static void registerAll() {
     // Text Input Fields - Group 1
-    FormFieldRegistry.register<ShadcnTextInputField>(
+    FormFieldRegistry.register<TextInputField>(
       'shadcn_text_input',
       (ctx) => ShadcnTextInputWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnTextAreaField>(
+    FormFieldRegistry.register<TextAreaField>(
       'shadcn_text_area',
       (ctx) => ShadcnTextAreaWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnFormattedInputField>(
+    FormFieldRegistry.register<FormattedInputField>(
       'shadcn_formatted_input',
       (ctx) {
-        final field = ctx.field as ShadcnFormattedInputField;
+        final field = ctx.field as FormattedInputField;
         return ShadcnFormattedInputWidget(
           context: ctx,
           parts: field.parts,
@@ -61,21 +61,21 @@ class ShadcnFieldRegistry {
       },
     );
 
-    FormFieldRegistry.register<ShadcnPhoneInputField>(
+    FormFieldRegistry.register<PhoneInputField>(
       'shadcn_phone_input',
       (ctx) => ShadcnPhoneInputWidget(context: ctx),
     );
 
     // Selection Fields - Group 2
-    FormFieldRegistry.register<ShadcnCheckboxField>(
+    FormFieldRegistry.register<CheckboxField>(
       'shadcn_checkbox',
       (ctx) => ShadcnCheckboxWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnSwitchField>(
+    FormFieldRegistry.register<SwitchField>(
       'shadcn_switch',
       (ctx) {
-        final field = ctx.field as ShadcnSwitchField;
+        final field = ctx.field as SwitchField;
         return ShadcnSwitchWidget(
           context: ctx,
           labelOnLeft: field.labelOnLeft,
@@ -83,75 +83,75 @@ class ShadcnFieldRegistry {
       },
     );
 
-    FormFieldRegistry.register<ShadcnToggleField>(
+    FormFieldRegistry.register<ToggleField>(
       'shadcn_toggle',
       (ctx) => ShadcnToggleWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnRadioGroupField>(
+    FormFieldRegistry.register<RadioGroupField>(
       'shadcn_radio_group',
       (ctx) => ShadcnRadioGroupWidget(context: ctx),
     );
 
     // Selection Fields - Group 3
-    FormFieldRegistry.register<ShadcnRadioCardField>(
+    FormFieldRegistry.register<RadioCardField>(
       'shadcn_radio_card',
       (ctx) => ShadcnRadioCardWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnSelectField>(
+    FormFieldRegistry.register<SelectField>(
       'shadcn_select',
       (ctx) => ShadcnSelectWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnItemPickerField>(
+    FormFieldRegistry.register<ItemPickerField>(
       'shadcn_item_picker',
       (ctx) => ShadcnItemPickerWidget(context: ctx),
     );
 
     // Input Enhancement & Numeric Fields - Group 4
-    FormFieldRegistry.register<ShadcnAutoCompleteField>(
+    FormFieldRegistry.register<AutoCompleteField>(
       'shadcn_autocomplete',
       (ctx) => ShadcnAutoCompleteWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnChipInputField>(
+    FormFieldRegistry.register<ChipInputField>(
       'shadcn_chip_input',
       (ctx) => ShadcnChipInputWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnNumberInputField>(
+    FormFieldRegistry.register<NumberInputField>(
       'shadcn_number_input',
       (ctx) => ShadcnNumberInputWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnSliderField>(
+    FormFieldRegistry.register<SliderField>(
       'shadcn_slider',
       (ctx) => ShadcnSliderWidget(context: ctx),
     );
 
     // Special Fields - Group 5
-    FormFieldRegistry.register<ShadcnStarRatingField>(
+    FormFieldRegistry.register<StarRatingField>(
       'shadcn_star_rating',
       (ctx) => ShadcnStarRatingWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnDatePickerField>(
+    FormFieldRegistry.register<DatePickerField>(
       'shadcn_date_picker',
       (ctx) => ShadcnDatePickerWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnTimePickerField>(
+    FormFieldRegistry.register<TimePickerField>(
       'shadcn_time_picker',
       (ctx) => ShadcnTimePickerWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnInputOTPField>(
+    FormFieldRegistry.register<InputOTPField>(
       'shadcn_input_otp',
       (ctx) => ShadcnInputOTPWidget(context: ctx),
     );
 
-    FormFieldRegistry.register<ShadcnColorPickerField>(
+    FormFieldRegistry.register<ColorPickerField>(
       'shadcn_color_picker',
       (ctx) => ShadcnColorPickerWidget(context: ctx),
     );

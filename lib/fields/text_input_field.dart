@@ -12,7 +12,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final textField = ShadcnTextInputField(
+/// final textField = TextInputField(
 ///   id: 'name',
 ///   title: 'Full Name',
 ///   description: 'Enter your full name',
@@ -25,7 +25,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   ],
 /// );
 /// ```
-class ShadcnTextInputField extends form.Field {
+class TextInputField extends form.Field {
   @override
   final String? defaultValue;
 
@@ -49,7 +49,7 @@ class ShadcnTextInputField extends form.Field {
   final BorderRadiusGeometry? borderRadius;
   final bool? filled;
 
-  ShadcnTextInputField({
+  TextInputField({
     required super.id,
     super.title,
     super.description,
@@ -135,7 +135,7 @@ class ShadcnTextInputWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnTextInputField;
+    final field = ctx.field as TextInputField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;

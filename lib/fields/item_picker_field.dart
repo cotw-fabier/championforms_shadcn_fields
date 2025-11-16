@@ -12,7 +12,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final countryField = ShadcnItemPickerField(
+/// final countryField = ItemPickerField(
 ///   id: 'country',
 ///   title: 'Select Country',
 ///   options: [
@@ -23,14 +23,14 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: form.FieldOption(label: 'United States', value: 'usa', hintText: 'North America'),
 /// );
 /// ```
-class ShadcnItemPickerField extends Field {
+class ItemPickerField extends Field {
   /// List of options to display in the item picker.
   final List<form.FieldOption> options;
 
   @override
   final form.FieldOption? defaultValue;
 
-  ShadcnItemPickerField({
+  ItemPickerField({
     required super.id,
     required this.options,
     super.title,
@@ -108,8 +108,8 @@ class ShadcnItemPickerWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get field and options from ShadcnItemPickerField
-    final field = ctx.field as ShadcnItemPickerField;
+    // Get field and options from ItemPickerField
+    final field = ctx.field as ItemPickerField;
     final options = field.options;
 
     final selectedOption = ctx.getValue<form.FieldOption?>();

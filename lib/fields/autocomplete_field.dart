@@ -11,14 +11,14 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final searchField = ShadcnAutoCompleteField(
+/// final searchField = AutoCompleteField(
 ///   id: 'search',
 ///   title: 'Search',
 ///   suggestions: ['Apple', 'Banana', 'Cherry', 'Date', 'Fig'],
 ///   placeholder: 'Type to search...',
 /// );
 /// ```
-class ShadcnAutoCompleteField extends form.Field {
+class AutoCompleteField extends form.Field {
   /// The list of suggestions to display.
   final List<String> suggestions;
 
@@ -56,7 +56,7 @@ class ShadcnAutoCompleteField extends form.Field {
   @override
   final String? defaultValue;
 
-  ShadcnAutoCompleteField({
+  AutoCompleteField({
     required super.id,
     super.title,
     super.description,
@@ -156,7 +156,7 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnAutoCompleteField;
+    final field = ctx.field as AutoCompleteField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;

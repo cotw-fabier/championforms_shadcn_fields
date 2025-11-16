@@ -10,7 +10,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final planField = ShadcnRadioCardField(
+/// final planField = RadioCardField(
 ///   id: 'plan',
 ///   title: 'Select Plan',
 ///   options: [
@@ -21,14 +21,14 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   defaultValue: [], // Empty list = no selection
 /// );
 /// ```
-class ShadcnRadioCardField extends form.OptionSelect {
+class RadioCardField extends form.OptionSelect {
   /// Spacing for wrapped items.
   final double? wrapSpacing;
 
   /// Spacing between rows when wrapping.
   final double? runGap;
 
-  ShadcnRadioCardField({
+  RadioCardField({
     required super.id,
     super.title,
     super.description,
@@ -63,7 +63,7 @@ class ShadcnRadioCardField extends form.OptionSelect {
 ///
 /// Example usage:
 /// ```dart
-/// ShadcnRadioCardField(
+/// RadioCardField(
 ///   id: 'plan',
 ///   title: 'Select Plan',
 ///   options: [
@@ -81,8 +81,8 @@ class ShadcnRadioCardWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get options from the ShadcnRadioCardField
-    final field = ctx.field as ShadcnRadioCardField;
+    // Get options from the RadioCardField
+    final field = ctx.field as RadioCardField;
     final options = field.options ?? [];
 
     // OptionSelect stores as List, even in single-select mode

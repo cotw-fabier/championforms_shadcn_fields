@@ -11,7 +11,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final tagsField = ShadcnChipInputField(
+/// final tagsField = ChipInputField(
 ///   id: 'tags',
 ///   title: 'Tags',
 ///   description: 'Enter tags for this item',
@@ -25,7 +25,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   ],
 /// );
 /// ```
-class ShadcnChipInputField extends form.Field {
+class ChipInputField extends form.Field {
   /// Suggestions to display in the autocomplete dropdown.
   final List<form.FieldOption> suggestions;
 
@@ -60,7 +60,7 @@ class ShadcnChipInputField extends form.Field {
   @override
   final List<form.FieldOption>? defaultValue;
 
-  ShadcnChipInputField({
+  ChipInputField({
     required super.id,
     super.title,
     super.description,
@@ -177,7 +177,7 @@ class _ShadcnChipInputWidgetState extends State<ShadcnChipInputWidget> {
   dynamic _lastValue;
 
   // Get field-specific properties
-  ShadcnChipInputField get _field => widget.context.field as ShadcnChipInputField;
+  ChipInputField get _field => widget.context.field as ChipInputField;
   List<form.FieldOption> get _suggestions => _field.suggestions;
   String? get _placeholder => _field.placeholder;
 

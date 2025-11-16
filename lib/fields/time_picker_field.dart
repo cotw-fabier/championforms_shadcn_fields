@@ -18,14 +18,14 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final timeField = ShadcnTimePickerField(
+/// final timeField = TimePickerField(
 ///   id: 'appointment_time',
 ///   title: 'Appointment Time',
 ///   description: 'Select a time for your appointment',
 ///   defaultValue: ShadcnTimePickerWidget.fromTimeOfDay(shadcn.TimeOfDay(hour: 9, minute: 0)),
 /// );
 /// ```
-class ShadcnTimePickerField extends form.Field {
+class TimePickerField extends form.Field {
   /// Popover vs dialog mode for the picker
   final shadcn.PromptMode? mode;
 
@@ -53,7 +53,7 @@ class ShadcnTimePickerField extends form.Field {
   @override
   final form.FieldOption? defaultValue;
 
-  ShadcnTimePickerField({
+  TimePickerField({
     required super.id,
     super.title,
     super.description,
@@ -150,7 +150,7 @@ class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnTimePickerField;
+    final field = ctx.field as TimePickerField;
     final fieldOption = ctx.getValue<form.FieldOption?>();
     final value = extractTimeOfDay(fieldOption);
 

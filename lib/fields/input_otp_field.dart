@@ -14,7 +14,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// ## Usage
 ///
 /// ```dart
-/// final otpField = ShadcnInputOTPField(
+/// final otpField = InputOTPField(
 ///   id: 'otp_code',
 ///   title: 'Verification Code',
 ///   description: 'Enter the code sent to your phone',
@@ -29,7 +29,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 ///   ],
 /// );
 /// ```
-class ShadcnInputOTPField extends form.Field {
+class InputOTPField extends form.Field {
   /// The number of OTP digits to display (default: 6)
   final int length;
 
@@ -62,7 +62,7 @@ class ShadcnInputOTPField extends form.Field {
   @override
   final String? defaultValue;
 
-  ShadcnInputOTPField({
+  InputOTPField({
     required super.id,
     super.title,
     super.description,
@@ -160,7 +160,7 @@ class ShadcnInputOTPWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnInputOTPField;
+    final field = ctx.field as InputOTPField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;

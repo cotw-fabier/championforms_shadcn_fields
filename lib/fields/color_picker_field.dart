@@ -15,7 +15,7 @@ import '../converters/color_option_converters.dart';
 /// ## Usage
 ///
 /// ```dart
-/// final colorField = ShadcnColorPickerField(
+/// final colorField = ColorPickerField(
 ///   id: 'theme_color',
 ///   title: 'Theme Color',
 ///   description: 'Choose your preferred theme color',
@@ -35,7 +35,7 @@ import '../converters/color_option_converters.dart';
 /// // Get the hex string
 /// final hex = results.grab('theme_color').asString();
 /// ```
-class ShadcnColorPickerField extends form.Field {
+class ColorPickerField extends form.Field {
   /// Popover vs dialog mode for the picker
   final PromptMode? mode;
 
@@ -75,7 +75,7 @@ class ShadcnColorPickerField extends form.Field {
   @override
   final form.FieldOption? defaultValue;
 
-  ShadcnColorPickerField({
+  ColorPickerField({
     required super.id,
     super.title,
     super.description,
@@ -164,7 +164,7 @@ class ShadcnColorPickerWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    final field = ctx.field as ShadcnColorPickerField;
+    final field = ctx.field as ColorPickerField;
 
     // Get current field option and extract Color from additionalData
     final fieldOption = ctx.getValue<form.FieldOption?>();

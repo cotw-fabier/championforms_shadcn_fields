@@ -73,24 +73,24 @@ class ShadcnNumberInputField extends form.Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is num) return value.toString();
-        if (value == null) return '';
-        throw TypeError();
-      };
+    if (value is num) return value.toString();
+    if (value == null) return '';
+    throw TypeError();
+  };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is num) return [value.toString()];
-        if (value == null) return [];
-        throw TypeError();
-      };
+    if (value is num) return [value.toString()];
+    if (value == null) return [];
+    throw TypeError();
+  };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is num) return value != 0;
-        if (value == null) return false;
-        throw TypeError();
-      };
+    if (value is num) return value != 0;
+    if (value == null) return false;
+    throw TypeError();
+  };
 
   @override
   List<FileModel>? Function(dynamic value)? get asFileListConverter => null;
@@ -189,8 +189,9 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
 
   void _onValueChanged(dynamic oldValue, dynamic newValue) {
     if (widget.context.field.onChange != null) {
-      final results =
-          form.FormResults.getResults(controller: widget.context.controller);
+      final results = form.FormResults.getResults(
+        controller: widget.context.controller,
+      );
       widget.context.field.onChange!(results);
     }
   }
@@ -237,7 +238,9 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final errors = widget.context.controller.findErrors(widget.context.field.id);
+    final errors = widget.context.controller.findErrors(
+      widget.context.field.id,
+    );
     final hasError = errors.isNotEmpty;
     final theme = widget.context.theme;
     final errorColors = theme.errorColorScheme ?? widget.context.colors;
@@ -246,18 +249,6 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title (if present)
-        if (ctx.field.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              ctx.field.title!,
-              style: theme.titleStyle?.copyWith(
-                color: hasError ? errorColors.titleColor : null,
-              ),
-            ),
-          ),
-
         // Number Input with Spinner
         Container(
           decoration: BoxDecoration(
@@ -280,35 +271,11 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
                   : null,
               enabled: !ctx.field.disabled,
               onChanged: _handleTextChanged,
-              features: const [
-                shadcn.InputFeature.spinner(),
-              ],
-              submitFormatters: [
-                shadcn.TextInputFormatters.mathExpression(),
-              ],
+              features: const [shadcn.InputFeature.spinner()],
+              submitFormatters: [shadcn.TextInputFormatters.mathExpression()],
             ),
           ),
         ),
-
-        // Description (if present)
-        if (ctx.field.description != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(ctx.field.description!, style: theme.hintTextStyle),
-          ),
-
-        // Error messages
-        if (hasError)
-          ...errors.map((error) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.reason,
-                  style: TextStyle(
-                    color: errorColors.textColor,
-                    fontSize: 12,
-                  ),
-                ),
-              )),
       ],
     );
   }

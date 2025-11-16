@@ -4,6 +4,8 @@ import 'package:championforms/models/themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 import 'package:intl/intl.dart';
 
+/// WARNING: This field is currently bugged in the upstream library
+/// This causes unforeseen behavior. Waiting for ShadCN_Flutter to issue a fix.
 /// A custom field that displays a date picker widget.
 ///
 /// Allows users to select a date or date range using ShadCN Flutter's DatePicker

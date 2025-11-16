@@ -75,24 +75,24 @@ class ShadcnStarRatingField extends form.Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is form.FieldOption) return value.value;
-        if (value == null) return '';
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return value.value;
+    if (value == null) return '';
+    throw TypeError();
+  };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is form.FieldOption) return [value.value];
-        if (value == null) return [];
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return [value.value];
+    if (value == null) return [];
+    throw TypeError();
+  };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is form.FieldOption) return true;
-        if (value == null) return false;
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return true;
+    if (value == null) return false;
+    throw TypeError();
+  };
 
   @override
   List<FileModel>? Function(dynamic value)? get asFileListConverter => null;
@@ -135,18 +135,6 @@ class ShadcnStarRatingWidget extends form.StatefulFieldWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title (if present)
-        if (ctx.field.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              ctx.field.title!,
-              style: theme.titleStyle?.copyWith(
-                color: hasError ? errorColors.titleColor : null,
-              ),
-            ),
-          ),
-
         // Star Rating Widget
         Container(
           decoration: BoxDecoration(
@@ -169,26 +157,6 @@ class ShadcnStarRatingWidget extends form.StatefulFieldWidget {
             starSize: 32,
           ),
         ),
-
-        // Description (if present)
-        if (ctx.field.description != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(ctx.field.description!, style: theme.hintTextStyle),
-          ),
-
-        // Error messages
-        if (hasError)
-          ...errors.map((error) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.reason,
-                  style: TextStyle(
-                    color: errorColors.textColor,
-                    fontSize: 12.0,
-                  ),
-                ),
-              )),
       ],
     );
   }
@@ -196,7 +164,9 @@ class ShadcnStarRatingWidget extends form.StatefulFieldWidget {
   @override
   void onValueChanged(dynamic oldValue, dynamic newValue) {
     if (context.field.onChange != null) {
-      final results = form.FormResults.getResults(controller: context.controller);
+      final results = form.FormResults.getResults(
+        controller: context.controller,
+      );
       context.field.onChange!(results);
     }
   }

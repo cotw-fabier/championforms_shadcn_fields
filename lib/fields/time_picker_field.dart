@@ -3,6 +3,8 @@ import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
+/// WARNING: This field is currently bugged in the upstream library
+/// This causes unforeseen behavior. Waiting for ShadCN_Flutter to issue a fix.
 /// A custom field that displays a time picker widget.
 ///
 /// Allows users to select a time using ShadCN Flutter's TimePicker component.
@@ -49,27 +51,28 @@ class ShadcnTimePickerField extends form.Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is form.FieldOption) return value.value;
-        if (value == null) return '';
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return value.value;
+    if (value == null) return '';
+    throw TypeError();
+  };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is form.FieldOption) return [value.value];
-        if (value == null) return [];
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return [value.value];
+    if (value == null) return [];
+    throw TypeError();
+  };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is form.FieldOption) return true;
-        if (value == null) return false;
-        throw TypeError();
-      };
+    if (value is form.FieldOption) return true;
+    if (value == null) return false;
+    throw TypeError();
+  };
 
   @override
-  List<form.FileModel>? Function(dynamic value)? get asFileListConverter => null;
+  List<form.FileModel>? Function(dynamic value)? get asFileListConverter =>
+      null;
 }
 
 /// Time picker field using ShadCN Flutter's TimePicker component.
@@ -116,7 +119,7 @@ class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
   ) {
     final fieldOption = ctx.getValue<form.FieldOption?>();
-    final value = extractTimeOfDay(fieldOption) ?? shadcn.TimeOfDay.now();
+    final value = extractTimeOfDay(fieldOption);
 
     return Column(
       key: ValueKey('timepicker_col_${ctx.field.id}'),
@@ -142,7 +145,9 @@ class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
   @override
   void onValueChanged(dynamic oldValue, dynamic newValue) {
     if (context.field.onChange != null) {
-      final results = form.FormResults.getResults(controller: context.controller);
+      final results = form.FormResults.getResults(
+        controller: context.controller,
+      );
       context.field.onChange!(results);
     }
   }

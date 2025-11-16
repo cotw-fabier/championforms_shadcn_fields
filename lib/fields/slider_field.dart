@@ -88,36 +88,36 @@ class ShadcnSliderField extends form.Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is shadcn.SliderValue) {
-          if (value.isRanged) {
-            return '${value.start}-${value.end}';
-          } else {
-            return value.value.toString();
-          }
-        }
-        if (value == null) return '';
-        throw TypeError();
-      };
+    if (value is shadcn.SliderValue) {
+      if (value.isRanged) {
+        return '${value.start}-${value.end}';
+      } else {
+        return value.value.toString();
+      }
+    }
+    if (value == null) return '';
+    throw TypeError();
+  };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is shadcn.SliderValue) {
-          if (value.isRanged) {
-            return [value.start.toString(), value.end.toString()];
-          } else {
-            return [value.value.toString()];
-          }
-        }
-        if (value == null) return [];
-        throw TypeError();
-      };
+    if (value is shadcn.SliderValue) {
+      if (value.isRanged) {
+        return [value.start.toString(), value.end.toString()];
+      } else {
+        return [value.value.toString()];
+      }
+    }
+    if (value == null) return [];
+    throw TypeError();
+  };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is shadcn.SliderValue) return value.value != 0;
-        if (value == null) return false;
-        throw TypeError();
-      };
+    if (value is shadcn.SliderValue) return value.value != 0;
+    if (value == null) return false;
+    throw TypeError();
+  };
 
   @override
   List<FileModel>? Function(dynamic value)? get asFileListConverter => null;
@@ -222,18 +222,6 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title (if present)
-        if (ctx.field.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              ctx.field.title!,
-              style: theme.titleStyle?.copyWith(
-                color: hasError ? errorColors.titleColor : null,
-              ),
-            ),
-          ),
-
         // Value display (if showLabel is true)
         if (showLabel)
           Padding(
@@ -266,26 +254,6 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
             },
           ),
         ),
-
-        // Description (if present)
-        if (ctx.field.description != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(ctx.field.description!, style: theme.hintTextStyle),
-          ),
-
-        // Error messages
-        if (hasError)
-          ...errors.map((error) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.reason,
-                  style: TextStyle(
-                    color: errorColors.textColor,
-                    fontSize: 12,
-                  ),
-                ),
-              )),
       ],
     );
   }

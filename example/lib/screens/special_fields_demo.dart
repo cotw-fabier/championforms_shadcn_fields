@@ -58,6 +58,8 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
 
     final fields = [
       // Date Picker Field - submit-time validation (future date)
+      // TODO: This field is bugged in the upstream ShadCN_Flutter Library
+      // will need to wait for fixes before fully integrating
       ShadcnDatePickerField(
         id: 'event_date',
         title: 'Event Date',
@@ -84,6 +86,8 @@ class _SpecialFieldsDemoState extends State<SpecialFieldsDemo> {
       ),
 
       // Time Picker Field - submit-time validation
+      // TODO: This field is bugged in the upstream ShadCN_Flutter Library
+      // will need to wait for fixes before fully integrating
       ShadcnTimePickerField(
         id: 'event_time',
         title: 'Event Time',

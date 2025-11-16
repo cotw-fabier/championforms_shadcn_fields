@@ -2,6 +2,7 @@ name: championforms_shadcn_fields
 description: "ChampionForms integration for ShadCN Flutter UI components. Provides 21 form fields built on top of ShadCN Flutter's component library."
 version: 0.0.1
 homepage:
+publish_to: none
 
 environment:
   sdk: ^3.11.0-88.0.dev
@@ -11,7 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   championforms:
-    path: /Users/fabier/Documents/code/championforms
+    git:
+      url: https://github.com/cotw-fabier/championforms.git
+      ref: ^0.5.3
   shadcn_flutter: ^0.0.47
   intl: ^0.19.0
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
@@ -33,6 +34,26 @@ class ShadcnFormattedInputField extends form.Field {
   @override
   final String? defaultValue;
 
+  // TextField parameters
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final int? maxLines;
+  final int? minLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<shadcn.InputFeature>? features;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final bool? readOnly;
+  final bool? obscureText;
+  final bool? autocorrect;
+  final bool? enableSuggestions;
+  final int? maxLength;
+  final bool? autofocus;
+  final String? hintText;
+  final shadcn.Border? border;
+  final BorderRadiusGeometry? borderRadius;
+  final bool? filled;
+
   ShadcnFormattedInputField({
     required super.id,
     super.title,
@@ -50,6 +71,24 @@ class ShadcnFormattedInputField extends form.Field {
     required this.parts,
     this.separator = '',
     this.defaultValue,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLines,
+    this.minLines,
+    this.inputFormatters,
+    this.features,
+    this.style,
+    this.textAlign,
+    this.readOnly,
+    this.obscureText,
+    this.autocorrect,
+    this.enableSuggestions,
+    this.maxLength,
+    this.autofocus,
+    this.hintText,
+    this.border,
+    this.borderRadius,
+    this.filled,
   });
 
   // --- Converter Implementations ---
@@ -120,6 +159,8 @@ class ShadcnFormattedInputWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    // Note: FormattedInput has limited customization. The field-level parameters
+    // are defined for API consistency but are not currently used by the component.
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
@@ -158,6 +199,8 @@ class ShadcnFormattedInputWidget extends form.StatefulFieldWidget {
               final stringValue = _formatValueToString(formattedValue);
               ctx.setValue(stringValue);
             },
+            // Note: FormattedInput has limited customization parameters.
+            // Most TextField parameters are not supported.
           ),
         ),
         if (ctx.field.description != null)

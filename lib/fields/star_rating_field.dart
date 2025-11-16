@@ -53,6 +53,24 @@ class ShadcnStarRatingField extends form.Field {
   @override
   final form.FieldOption? defaultValue;
 
+  /// Maximum rating value (default: 5.0)
+  final double? max;
+
+  /// Minimum increment for rating changes (default: 0.5, use 1.0 for whole stars only)
+  final double? step;
+
+  /// Star fill color
+  final Color? activeColor;
+
+  /// Empty star color
+  final Color? backgroundColor;
+
+  /// Star icon size
+  final double? starSize;
+
+  /// Spacing between stars
+  final double? starSpacing;
+
   ShadcnStarRatingField({
     required super.id,
     super.title,
@@ -68,6 +86,12 @@ class ShadcnStarRatingField extends form.Field {
     super.fieldLayout,
     super.fieldBackground,
     this.defaultValue,
+    this.max,
+    this.step,
+    this.activeColor,
+    this.backgroundColor,
+    this.starSize,
+    this.starSpacing,
   });
 
   // --- Converter Implementations ---
@@ -128,6 +152,9 @@ class ShadcnStarRatingWidget extends form.StatefulFieldWidget {
     final fieldOption = ctx.getValue<form.FieldOption?>();
     final value = StarRatingOptionConverters.extractRating(fieldOption) ?? 0.0;
 
+    // Cast to ShadcnStarRatingField to access custom properties
+    final field = ctx.field as ShadcnStarRatingField;
+
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
@@ -149,12 +176,19 @@ class ShadcnStarRatingWidget extends form.StatefulFieldWidget {
           child: shadcn.StarRating(
             key: ValueKey('starrating_${ctx.field.id}'),
             value: value,
-            onChanged: (newValue) {
-              // Wrap rating in FieldOption with generated label
-              final option = StarRatingOptionConverters.fromRating(newValue);
-              ctx.setValue<form.FieldOption?>(option);
-            },
-            starSize: 32,
+            onChanged: ctx.field.disabled
+                ? null
+                : (newValue) {
+                    // Wrap rating in FieldOption with generated label
+                    final option = StarRatingOptionConverters.fromRating(newValue);
+                    ctx.setValue<form.FieldOption?>(option);
+                  },
+            max: field.max ?? 5.0,
+            step: field.step ?? 0.5,
+            activeColor: field.activeColor,
+            backgroundColor: field.backgroundColor,
+            starSize: field.starSize,
+            starSpacing: field.starSpacing,
           ),
         ),
       ],

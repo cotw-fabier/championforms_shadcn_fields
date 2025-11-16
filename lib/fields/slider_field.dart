@@ -185,6 +185,9 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    // Get field from ShadcnSliderField
+    final field = ctx.field as ShadcnSliderField;
+
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
@@ -197,20 +200,20 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
       value = currentValue;
     } else {
       // Use initialValue/initialRange or default
-      if (isRange) {
-        if (initialRange != null && initialRange!.length == 2) {
-          value = shadcn.SliderValue.ranged(initialRange![0], initialRange![1]);
+      if (field.isRange) {
+        if (field.initialRange != null && field.initialRange!.length == 2) {
+          value = shadcn.SliderValue.ranged(field.initialRange![0], field.initialRange![1]);
         } else {
           value = shadcn.SliderValue.ranged(
-            min + (max - min) * 0.25,
-            min + (max - min) * 0.75,
+            field.min + (field.max - field.min) * 0.25,
+            field.min + (field.max - field.min) * 0.75,
           );
         }
       } else {
-        if (initialValue != null) {
-          value = shadcn.SliderValue.single(initialValue!);
+        if (field.initialValue != null) {
+          value = shadcn.SliderValue.single(field.initialValue!);
         } else {
-          value = shadcn.SliderValue.single(min + (max - min) * 0.5);
+          value = shadcn.SliderValue.single(field.min + (field.max - field.min) * 0.5);
         }
       }
       // Set initial value
@@ -223,11 +226,11 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Value display (if showLabel is true)
-        if (showLabel)
+        if (field.showLabel)
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              _formatValue(value, min, max),
+              _formatValue(value, field.min, field.max),
               style: theme.hintTextStyle,
             ),
           ),
@@ -246,9 +249,9 @@ class ShadcnSliderWidget extends form.StatefulFieldWidget {
           child: shadcn.Slider(
             key: ValueKey('slider_${ctx.field.id}'),
             value: value,
-            min: min,
-            max: max,
-            divisions: divisions,
+            min: field.min,
+            max: field.max,
+            divisions: field.divisions,
             onChanged: (newValue) {
               ctx.setValue<shadcn.SliderValue>(newValue);
             },

@@ -28,6 +28,24 @@ class ShadcnSwitchField extends form.OptionSelect {
   /// Defaults to false (labels on the right).
   final bool labelOnLeft;
 
+  /// Spacing between switch and labels
+  final double? gap;
+
+  /// Color when switched on
+  final Color? activeColor;
+
+  /// Color when switched off
+  final Color? inactiveColor;
+
+  /// Thumb color when on
+  final Color? activeThumbColor;
+
+  /// Thumb color when off
+  final Color? inactiveThumbColor;
+
+  /// Corner radius
+  final BorderRadiusGeometry? borderRadius;
+
   ShadcnSwitchField({
     required super.id,
     super.title,
@@ -46,6 +64,12 @@ class ShadcnSwitchField extends form.OptionSelect {
     super.defaultValue,
     super.multiselect,
     this.labelOnLeft = false,
+    this.gap,
+    this.activeColor,
+    this.inactiveColor,
+    this.activeThumbColor,
+    this.inactiveThumbColor,
+    this.borderRadius,
   });
 }
 
@@ -92,7 +116,7 @@ class ShadcnSwitchWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
   ) {
     // Get options from the OptionSelect field
-    final field = ctx.field as form.OptionSelect;
+    final field = ctx.field as ShadcnSwitchField;
     final options = field.options ?? [];
 
     return Column(
@@ -118,6 +142,12 @@ class ShadcnSwitchWidget extends form.StatefulFieldWidget {
               // Position label based on labelOnLeft parameter
               leading: labelOnLeft ? Text(option.label) : null,
               trailing: !labelOnLeft ? Text(option.label) : null,
+              gap: field.gap,
+              activeColor: field.activeColor,
+              inactiveColor: field.inactiveColor,
+              activeThumbColor: field.activeThumbColor,
+              inactiveThumbColor: field.inactiveThumbColor,
+              borderRadius: field.borderRadius,
             ),
           );
         }),

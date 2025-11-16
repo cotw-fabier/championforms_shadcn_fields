@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/file_model.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
@@ -42,6 +43,26 @@ class ShadcnNumberInputField extends form.Field {
   /// Width of the input field.
   final double? width;
 
+  // Common TextField parameters
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final int? maxLines;
+  final int? minLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<shadcn.InputFeature>? features;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final bool? readOnly;
+  final bool? obscureText;
+  final bool? autocorrect;
+  final bool? enableSuggestions;
+  final int? maxLength;
+  final bool? autofocus;
+  final String? hintText;
+  final shadcn.Border? border;
+  final BorderRadiusGeometry? borderRadius;
+  final bool? filled;
+
   @override
   final num? defaultValue;
 
@@ -65,6 +86,24 @@ class ShadcnNumberInputField extends form.Field {
     this.max,
     this.decimals = 0,
     this.width = 200,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLines,
+    this.minLines,
+    this.inputFormatters,
+    this.features,
+    this.style,
+    this.textAlign,
+    this.readOnly,
+    this.obscureText,
+    this.autocorrect,
+    this.enableSuggestions,
+    this.maxLength,
+    this.autofocus,
+    this.hintText,
+    this.border,
+    this.borderRadius,
+    this.filled,
     this.defaultValue,
   });
 
@@ -120,21 +159,9 @@ class ShadcnNumberInputField extends form.Field {
 /// ```
 class ShadcnNumberInputWidget extends StatefulWidget {
   final form.FieldBuilderContext context;
-  final String? placeholder;
-  final num? step;
-  final num? min;
-  final num? max;
-  final int decimals;
-  final double? width;
 
   const ShadcnNumberInputWidget({
     required this.context,
-    this.placeholder,
-    this.step,
-    this.min,
-    this.max,
-    this.decimals = 0,
-    this.width = 200,
     super.key,
   });
 
@@ -147,6 +174,9 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
   late TextEditingController _textController;
   late FocusNode _focusNode;
   dynamic _lastValue;
+
+  // Get field-specific properties
+  ShadcnNumberInputField get _field => widget.context.field as ShadcnNumberInputField;
 
   @override
   void initState() {
@@ -197,8 +227,8 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
   }
 
   String _formatNumber(num value) {
-    if (widget.decimals > 0) {
-      return value.toStringAsFixed(widget.decimals);
+    if (_field.decimals > 0) {
+      return value.toStringAsFixed(_field.decimals);
     }
     return value.toString();
   }
@@ -206,7 +236,7 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
   num? _parseNumber(String text) {
     if (text.isEmpty) return null;
 
-    if (widget.decimals > 0) {
+    if (_field.decimals > 0) {
       return double.tryParse(text);
     }
     return int.tryParse(text) ?? double.tryParse(text);
@@ -217,11 +247,11 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
     if (value != null) {
       // Apply min/max constraints
       num constrainedValue = value;
-      if (widget.min != null && constrainedValue < widget.min!) {
-        constrainedValue = widget.min!;
+      if (_field.min != null && constrainedValue < _field.min!) {
+        constrainedValue = _field.min!;
       }
-      if (widget.max != null && constrainedValue > widget.max!) {
-        constrainedValue = widget.max!;
+      if (_field.max != null && constrainedValue > _field.max!) {
+        constrainedValue = _field.max!;
       }
 
       widget.context.setValue<num>(constrainedValue);
@@ -246,6 +276,9 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
     final errorColors = theme.errorColorScheme ?? widget.context.colors;
     final ctx = widget.context;
 
+    // Build features list - use field.features if provided, otherwise default to spinner
+    final effectiveFeatures = _field.features ?? const [shadcn.InputFeature.spinner()];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -261,18 +294,32 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
             borderRadius: hasError ? errorColors.borderRadius : null,
           ),
           child: SizedBox(
-            width: widget.width,
+            width: _field.width,
             child: shadcn.TextField(
               key: ValueKey('numberinput_${ctx.field.id}'),
               controller: _textController,
               focusNode: _focusNode,
-              placeholder: widget.placeholder != null
-                  ? Text(widget.placeholder!)
-                  : null,
+              placeholder: _field.placeholder != null
+                  ? Text(_field.placeholder!)
+                  : _field.hintText != null
+                      ? Text(_field.hintText!)
+                      : null,
               enabled: !ctx.field.disabled,
               onChanged: _handleTextChanged,
-              features: const [shadcn.InputFeature.spinner()],
+              features: effectiveFeatures,
               submitFormatters: [shadcn.TextInputFormatters.mathExpression()],
+              keyboardType: _field.keyboardType,
+              textInputAction: _field.textInputAction,
+              maxLines: _field.maxLines,
+              minLines: _field.minLines,
+              inputFormatters: _field.inputFormatters,
+              style: _field.style,
+              readOnly: _field.readOnly ?? false,
+              obscureText: _field.obscureText ?? false,
+              autocorrect: _field.autocorrect ?? true,
+              enableSuggestions: _field.enableSuggestions ?? true,
+              maxLength: _field.maxLength,
+              autofocus: _field.autofocus ?? false,
             ),
           ),
         ),

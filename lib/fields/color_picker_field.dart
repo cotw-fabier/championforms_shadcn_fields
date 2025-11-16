@@ -36,6 +36,42 @@ import '../converters/color_option_converters.dart';
 /// final hex = results.grab('theme_color').asString();
 /// ```
 class ShadcnColorPickerField extends form.Field {
+  /// Popover vs dialog mode for the picker
+  final PromptMode? mode;
+
+  /// Live updates while dragging color sliders
+  final ValueChanged<ColorDerivative>? onChanging;
+
+  /// Show alpha/opacity controls
+  final bool? showAlpha;
+
+  /// HSV, HSL, RGB picker mode
+  final ColorPickerMode? initialMode;
+
+  /// Enable screen color sampling (eyedropper)
+  final bool? enableEyeDropper;
+
+  /// Popup alignment relative to the trigger
+  final AlignmentGeometry? popoverAlignment;
+
+  /// Anchor alignment for the popup
+  final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Internal padding for the popover
+  final EdgeInsetsGeometry? popoverPadding;
+
+  /// Shown when no color selected
+  final material.Widget? placeholder;
+
+  /// Title for dialog mode
+  final material.Widget? dialogTitle;
+
+  /// Show color history panel
+  final bool showHistory;
+
+  /// Show label with hex value
+  final bool? showLabel;
+
   @override
   final form.FieldOption? defaultValue;
 
@@ -53,6 +89,18 @@ class ShadcnColorPickerField extends form.Field {
     super.theme,
     super.fieldLayout,
     super.fieldBackground,
+    this.mode,
+    this.onChanging,
+    this.showAlpha,
+    this.initialMode,
+    this.enableEyeDropper,
+    this.popoverAlignment,
+    this.popoverAnchorAlignment,
+    this.popoverPadding,
+    this.placeholder,
+    this.dialogTitle,
+    this.showHistory = false,
+    this.showLabel,
     this.defaultValue,
   });
 
@@ -116,6 +164,8 @@ class ShadcnColorPickerWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    final field = ctx.field as ShadcnColorPickerField;
+
     // Get current field option and extract Color from additionalData
     final fieldOption = ctx.getValue<form.FieldOption?>();
     final colorValue = ColorOptionConverters.extractColor(fieldOption) ?? material.Colors.blue;
@@ -130,8 +180,18 @@ class ShadcnColorPickerWidget extends form.StatefulFieldWidget {
         ColorInput(
           key: material.ValueKey('colorpicker_${ctx.field.id}'),
           value: colorDerivative,
-          promptMode: PromptMode.popover,
-          showLabel: true,
+          promptMode: field.mode,
+          onChanging: field.onChanging,
+          showAlpha: field.showAlpha,
+          initialMode: field.initialMode,
+          enableEyeDropper: field.enableEyeDropper,
+          popoverAlignment: field.popoverAlignment,
+          popoverAnchorAlignment: field.popoverAnchorAlignment,
+          popoverPadding: field.popoverPadding,
+          placeholder: field.placeholder,
+          dialogTitle: field.dialogTitle,
+          showHistory: field.showHistory,
+          showLabel: field.showLabel,
           onChanged: ctx.field.disabled
               ? null
               : (newColor) {

@@ -26,6 +26,10 @@ class ShadcnToggleField extends form.Field {
   @override
   final form.FieldOption? defaultValue;
 
+  /// Custom icon widget
+  @override
+  final Widget? icon;
+
   ShadcnToggleField({
     required super.id,
     super.title,
@@ -42,6 +46,7 @@ class ShadcnToggleField extends form.Field {
     super.fieldBackground,
     this.checkedOption,
     this.defaultValue,
+    this.icon,
   });
 
   // --- Converter Implementations ---
@@ -116,6 +121,9 @@ class ShadcnToggleWidget extends form.StatefulFieldWidget {
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
 
+    // Cast to ShadcnToggleField to access custom properties
+    final field = ctx.field as ShadcnToggleField;
+
     // Use provided checkedOption or default
     final defaultToggled = form.FieldOption(label: 'Toggled', value: 'true');
     final activeOption = checkedOption ?? defaultToggled;
@@ -142,10 +150,12 @@ class ShadcnToggleWidget extends form.StatefulFieldWidget {
         // Toggle button
         shadcn.Toggle(
           value: isToggled,
-          onChanged: (newValue) {
-            ctx.setValue<form.FieldOption?>(newValue ? activeOption : null);
-          },
-          child: Text(ctx.field.title ?? 'Toggle'),
+          onChanged: ctx.field.disabled
+              ? null
+              : (newValue) {
+                  ctx.setValue<form.FieldOption?>(newValue ? activeOption : null);
+                },
+          child: field.icon ?? Text(ctx.field.title ?? 'Toggle'),
         ),
 
         // Description (if present)

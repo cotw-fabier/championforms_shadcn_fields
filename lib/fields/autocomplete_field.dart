@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
@@ -24,6 +25,34 @@ class ShadcnAutoCompleteField extends form.Field {
   /// The placeholder text to display when the field is empty.
   final String? placeholder;
 
+  // Common TextField parameters
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final int? maxLines;
+  final int? minLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<shadcn.InputFeature>? features;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final bool? readOnly;
+  final bool? obscureText;
+  final bool? autocorrect;
+  final bool? enableSuggestions;
+  final int? maxLength;
+  final bool? autofocus;
+  final String? hintText;
+  final shadcn.Border? border;
+  final BorderRadiusGeometry? borderRadius;
+  final bool? filled;
+
+  // AutoComplete-specific parameters
+  final BoxConstraints? popoverConstraints;
+  final shadcn.PopoverConstraint? popoverWidthConstraint;
+  final AlignmentDirectional? popoverAnchorAlignment;
+  final AlignmentDirectional? popoverAlignment;
+  final shadcn.AutoCompleteMode? mode;
+  final shadcn.AutoCompleteCompleter? completer;
+
   @override
   final String? defaultValue;
 
@@ -43,6 +72,30 @@ class ShadcnAutoCompleteField extends form.Field {
     super.fieldBackground,
     this.suggestions = const [],
     this.placeholder,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLines,
+    this.minLines,
+    this.inputFormatters,
+    this.features,
+    this.style,
+    this.textAlign,
+    this.readOnly,
+    this.obscureText,
+    this.autocorrect,
+    this.enableSuggestions,
+    this.maxLength,
+    this.autofocus,
+    this.hintText,
+    this.border,
+    this.borderRadius,
+    this.filled,
+    this.popoverConstraints,
+    this.popoverWidthConstraint,
+    this.popoverAnchorAlignment,
+    this.popoverAlignment,
+    this.mode,
+    this.completer,
     this.defaultValue,
   });
 
@@ -92,13 +145,8 @@ class ShadcnAutoCompleteField extends form.Field {
 /// )
 /// ```
 class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
-  final List<String> suggestions;
-  final String? placeholder;
-
   const ShadcnAutoCompleteWidget({
     required super.context,
-    this.suggestions = const [],
-    this.placeholder,
     super.key,
   });
 
@@ -108,6 +156,7 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    final field = ctx.field as ShadcnAutoCompleteField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
@@ -117,9 +166,13 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
     // Filter suggestions based on current value
     final filteredSuggestions = value.isEmpty
         ? <String>[]
-        : suggestions
+        : field.suggestions
             .where((s) => s.toLowerCase().contains(value.toLowerCase()))
             .toList();
+
+    // Build default features if not provided
+    final effectiveFeatures = field.features ??
+        const [shadcn.InputFeature.trailing(Icon(shadcn.LucideIcons.search))];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,11 +206,25 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
               key: ValueKey('autocomplete_${ctx.field.id}'),
               controller: ctx.getTextController(),
               focusNode: ctx.getFocusNode(),
-              placeholder: placeholder != null ? Text(placeholder!) : null,
+              placeholder: field.placeholder != null
+                  ? Text(field.placeholder!)
+                  : field.hintText != null
+                      ? Text(field.hintText!)
+                      : null,
               enabled: !ctx.field.disabled,
-              features: const [
-                shadcn.InputFeature.trailing(Icon(shadcn.LucideIcons.search)),
-              ],
+              features: effectiveFeatures,
+              keyboardType: field.keyboardType,
+              textInputAction: field.textInputAction,
+              maxLines: field.maxLines,
+              minLines: field.minLines,
+              inputFormatters: field.inputFormatters,
+              style: field.style,
+              readOnly: field.readOnly ?? false,
+              obscureText: field.obscureText ?? false,
+              autocorrect: field.autocorrect ?? true,
+              enableSuggestions: field.enableSuggestions ?? true,
+              maxLength: field.maxLength,
+              autofocus: field.autofocus ?? false,
             ),
           ),
         ),

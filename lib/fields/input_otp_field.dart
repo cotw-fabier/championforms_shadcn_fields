@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/file_model.dart';
 import 'package:championforms/models/themes.dart';
@@ -35,6 +36,29 @@ class ShadcnInputOTPField extends form.Field {
   /// Whether to show a separator in the middle (default: true)
   final bool showSeparator;
 
+  // Common TextField parameters
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final int? maxLines;
+  final int? minLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<shadcn.InputFeature>? features;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final bool? readOnly;
+  final bool? obscureText;
+  final bool? autocorrect;
+  final bool? enableSuggestions;
+  final int? maxLength;
+  final bool? autofocus;
+  final String? hintText;
+  final shadcn.Border? border;
+  final BorderRadiusGeometry? borderRadius;
+  final bool? filled;
+
+  // InputOTP-specific parameter
+  final List<shadcn.InputOTPChild>? children;
+
   @override
   final String? defaultValue;
 
@@ -54,6 +78,25 @@ class ShadcnInputOTPField extends form.Field {
     super.fieldBackground,
     this.length = 6,
     this.showSeparator = true,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLines,
+    this.minLines,
+    this.inputFormatters,
+    this.features,
+    this.style,
+    this.textAlign,
+    this.readOnly,
+    this.obscureText,
+    this.autocorrect,
+    this.enableSuggestions,
+    this.maxLength,
+    this.autofocus,
+    this.hintText,
+    this.border,
+    this.borderRadius,
+    this.filled,
+    this.children,
     this.defaultValue,
   });
 
@@ -106,16 +149,9 @@ class ShadcnInputOTPField extends form.Field {
 /// )
 /// ```
 class ShadcnInputOTPWidget extends form.StatefulFieldWidget {
-  /// The number of OTP digits to display (default: 6)
-  final int length;
-
-  /// Whether to show a separator in the middle (default: true)
-  final bool showSeparator;
-
   const ShadcnInputOTPWidget({
     required super.context,
-    this.length = 6,
-    this.showSeparator = true,
+    super.key,
   });
 
   @override
@@ -124,26 +160,33 @@ class ShadcnInputOTPWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    final field = ctx.field as ShadcnInputOTPField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
 
-    // Build the OTP children based on length
-    final children = <shadcn.InputOTPChild>[];
-    final halfLength = length ~/ 2;
+    // Use provided children if available, otherwise build from length/separator
+    final List<shadcn.InputOTPChild> effectiveChildren;
+    if (field.children != null) {
+      effectiveChildren = field.children!;
+    } else {
+      // Build the OTP children based on length
+      effectiveChildren = <shadcn.InputOTPChild>[];
+      final halfLength = field.length ~/ 2;
 
-    for (int i = 0; i < length; i++) {
-      // Add separator in the middle if enabled
-      if (showSeparator && i == halfLength && length % 2 == 0) {
-        children.add(shadcn.InputOTPChild.separator);
+      for (int i = 0; i < field.length; i++) {
+        // Add separator in the middle if enabled
+        if (field.showSeparator && i == halfLength && field.length % 2 == 0) {
+          effectiveChildren.add(shadcn.InputOTPChild.separator);
+        }
+
+        // Add character input
+        effectiveChildren.add(
+          shadcn.InputOTPChild.character(
+            allowDigit: true,
+          ),
+        );
       }
-
-      // Add character input
-      children.add(
-        shadcn.InputOTPChild.character(
-          allowDigit: true,
-        ),
-      );
     }
 
     return Column(
@@ -182,7 +225,7 @@ class ShadcnInputOTPWidget extends form.StatefulFieldWidget {
               final stringValue = otpValue.otpToString();
               ctx.setValue<String>(stringValue);
             },
-            children: children,
+            children: effectiveChildren,
           ),
         ),
 

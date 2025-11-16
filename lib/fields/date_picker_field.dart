@@ -39,6 +39,33 @@ class ShadcnDatePickerField extends form.Field {
   /// Whether this picker selects a date range (true) or single date (false)
   final bool isRangeSelector;
 
+  /// Popover vs dialog mode for the picker
+  final shadcn.PromptMode? mode;
+
+  /// Custom placeholder widget shown when no date is selected
+  final Widget? placeholder;
+
+  /// Initial calendar view period (month, year, decade)
+  final shadcn.CalendarView? initialView;
+
+  /// Popup alignment relative to the trigger
+  final AlignmentGeometry? popoverAlignment;
+
+  /// Anchor alignment for the popup
+  final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Internal padding for the popover
+  final EdgeInsetsGeometry? popoverPadding;
+
+  /// Dialog title widget (for dialog mode)
+  final Widget? dialogTitle;
+
+  /// Calendar layout style (grid, list, compact)
+  final shadcn.CalendarViewType? initialViewType;
+
+  /// Custom date cell state builder
+  final shadcn.DateStateBuilder? stateBuilder;
+
   @override
   final form.FieldOption? defaultValue;
 
@@ -57,6 +84,15 @@ class ShadcnDatePickerField extends form.Field {
     super.fieldLayout,
     super.fieldBackground,
     this.isRangeSelector = false,
+    this.mode,
+    this.placeholder,
+    this.initialView,
+    this.popoverAlignment,
+    this.popoverAnchorAlignment,
+    this.popoverPadding,
+    this.dialogTitle,
+    this.initialViewType,
+    this.stateBuilder,
     this.defaultValue,
   });
 
@@ -170,12 +206,21 @@ class ShadcnDatePickerWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
     form.FieldOption? fieldOption,
   ) {
+    final field = ctx.field as ShadcnDatePickerField;
     final value = extractDateTime(fieldOption);
 
     return shadcn.DatePicker(
       key: ValueKey('datepicker_${ctx.field.id}'),
       value: value,
-      mode: shadcn.PromptMode.popover,
+      mode: field.mode,
+      placeholder: field.placeholder,
+      initialView: field.initialView,
+      popoverAlignment: field.popoverAlignment,
+      popoverAnchorAlignment: field.popoverAnchorAlignment,
+      popoverPadding: field.popoverPadding,
+      dialogTitle: field.dialogTitle,
+      initialViewType: field.initialViewType,
+      stateBuilder: field.stateBuilder,
       onChanged: ctx.field.disabled
           ? null
           : (newValue) {
@@ -192,12 +237,21 @@ class ShadcnDatePickerWidget extends form.StatefulFieldWidget {
     form.FieldBuilderContext ctx,
     form.FieldOption? fieldOption,
   ) {
+    final field = ctx.field as ShadcnDatePickerField;
     final value = extractDateTimeRange(fieldOption);
 
     return shadcn.DateRangePicker(
       key: ValueKey('daterangepicker_${ctx.field.id}'),
       value: value,
-      mode: shadcn.PromptMode.popover,
+      mode: field.mode ?? shadcn.PromptMode.popover,
+      placeholder: field.placeholder,
+      initialView: field.initialView,
+      popoverAlignment: field.popoverAlignment,
+      popoverAnchorAlignment: field.popoverAnchorAlignment,
+      popoverPadding: field.popoverPadding,
+      dialogTitle: field.dialogTitle,
+      initialViewType: field.initialViewType,
+      stateBuilder: field.stateBuilder,
       onChanged: ctx.field.disabled
           ? null
           : (newValue) {

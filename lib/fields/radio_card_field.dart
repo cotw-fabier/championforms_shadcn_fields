@@ -22,6 +22,12 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// );
 /// ```
 class ShadcnRadioCardField extends form.OptionSelect {
+  /// Spacing for wrapped items.
+  final double? wrapSpacing;
+
+  /// Spacing between rows when wrapping.
+  final double? runGap;
+
   ShadcnRadioCardField({
     required super.id,
     super.title,
@@ -38,6 +44,8 @@ class ShadcnRadioCardField extends form.OptionSelect {
     super.fieldBackground,
     required super.options,
     super.defaultValue,
+    this.wrapSpacing,
+    this.runGap,
   });
 }
 
@@ -73,8 +81,8 @@ class ShadcnRadioCardWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get options from the OptionSelect field
-    final field = ctx.field as form.OptionSelect;
+    // Get options from the ShadcnRadioCardField
+    final field = ctx.field as ShadcnRadioCardField;
     final options = field.options ?? [];
 
     // OptionSelect stores as List, even in single-select mode
@@ -103,8 +111,8 @@ class ShadcnRadioCardWidget extends form.StatefulFieldWidget {
                   ctx.setValue<List<form.FieldOption>>([newOption]);
                 },
           child: Wrap(
-            spacing: 12,
-            runSpacing: 12,
+            spacing: field.wrapSpacing ?? 12,
+            runSpacing: field.runGap ?? 12,
             children: options.map((option) {
               return shadcn.RadioCard<String>(
                 value: option.value,

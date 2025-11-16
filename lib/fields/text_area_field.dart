@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:championforms/models/file_model.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
@@ -29,6 +30,32 @@ class ShadcnTextAreaField extends form.Field {
   @override
   final String? defaultValue;
 
+  // TextField parameters (common to TextArea)
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final int? maxLines;
+  final int? minLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<shadcn.InputFeature>? features;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final bool? readOnly;
+  final bool? obscureText;
+  final bool? autocorrect;
+  final bool? enableSuggestions;
+  final int? maxLength;
+  final bool? autofocus;
+  final String? hintText;
+  final shadcn.Border? border;
+  final BorderRadiusGeometry? borderRadius;
+  final bool? filled;
+
+  // TextArea-specific parameters
+  final double? minHeight;
+  final double? maxHeight;
+  final bool? expandableHeight;
+  final double? initialHeight;
+
   ShadcnTextAreaField({
     required super.id,
     super.title,
@@ -44,6 +71,28 @@ class ShadcnTextAreaField extends form.Field {
     super.fieldLayout,
     super.fieldBackground,
     this.defaultValue,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLines,
+    this.minLines,
+    this.inputFormatters,
+    this.features,
+    this.style,
+    this.textAlign,
+    this.readOnly,
+    this.obscureText,
+    this.autocorrect,
+    this.enableSuggestions,
+    this.maxLength,
+    this.autofocus,
+    this.hintText,
+    this.border,
+    this.borderRadius,
+    this.filled,
+    this.minHeight,
+    this.maxHeight,
+    this.expandableHeight,
+    this.initialHeight,
   });
 
   // --- Converter Implementations ---
@@ -98,6 +147,7 @@ class ShadcnTextAreaWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    final field = ctx.field as ShadcnTextAreaField;
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;
     final errorColors = theme.errorColorScheme ?? ctx.colors;
@@ -128,16 +178,36 @@ class ShadcnTextAreaWidget extends form.StatefulFieldWidget {
             key: ValueKey('textarea_${ctx.field.id}'),
             controller: textController,
             focusNode: focusNode,
-            placeholder: ctx.field.description != null
-                ? Text(ctx.field.description!)
-                : null,
+            placeholder: field.hintText != null
+                ? Text(field.hintText!)
+                : (ctx.field.description != null
+                    ? Text(ctx.field.description!)
+                    : null),
             enabled: !ctx.field.disabled,
-            expandableHeight: true,
-            initialHeight: 150,
             onChanged: (value) {
-              // debugPrint(value);
               ctx.setValue(value);
             },
+            keyboardType: field.keyboardType,
+            textInputAction: field.textInputAction,
+            maxLines: field.maxLines,
+            minLines: field.minLines,
+            inputFormatters: field.inputFormatters,
+            features: field.features ?? [],
+            style: field.style,
+            textAlign: field.textAlign ?? TextAlign.start,
+            readOnly: field.readOnly ?? false,
+            obscureText: field.obscureText ?? false,
+            autocorrect: field.autocorrect ?? true,
+            enableSuggestions: field.enableSuggestions ?? true,
+            maxLength: field.maxLength,
+            autofocus: field.autofocus ?? false,
+            border: field.border,
+            borderRadius: field.borderRadius,
+            filled: field.filled,
+            minHeight: field.minHeight ?? 0,
+            maxHeight: field.maxHeight ?? double.infinity,
+            expandableHeight: field.expandableHeight ?? true,
+            initialHeight: field.initialHeight ?? 150,
           ),
         ),
       ],

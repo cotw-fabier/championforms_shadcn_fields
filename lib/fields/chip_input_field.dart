@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
@@ -31,6 +32,31 @@ class ShadcnChipInputField extends form.Field {
   /// Placeholder text to display when no chips are present.
   final String? placeholder;
 
+  // Common TextField parameters
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final int? maxLines;
+  final int? minLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final List<shadcn.InputFeature>? features;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final bool? readOnly;
+  final bool? obscureText;
+  final bool? autocorrect;
+  final bool? enableSuggestions;
+  final int? maxLength;
+  final bool? autofocus;
+  final String? hintText;
+  final shadcn.Border? border;
+  final BorderRadiusGeometry? borderRadius;
+  final bool? filled;
+
+  // ChipInput-specific parameters
+  final bool? useChips;
+  final bool? autoInsertSuggestion;
+  final ValueChanged<List<form.FieldOption>>? onChipsChanged;
+
   @override
   final List<form.FieldOption>? defaultValue;
 
@@ -50,6 +76,27 @@ class ShadcnChipInputField extends form.Field {
     super.fieldBackground,
     this.suggestions = const [],
     this.placeholder,
+    this.keyboardType,
+    this.textInputAction,
+    this.maxLines,
+    this.minLines,
+    this.inputFormatters,
+    this.features,
+    this.style,
+    this.textAlign,
+    this.readOnly,
+    this.obscureText,
+    this.autocorrect,
+    this.enableSuggestions,
+    this.maxLength,
+    this.autofocus,
+    this.hintText,
+    this.border,
+    this.borderRadius,
+    this.filled,
+    this.useChips,
+    this.autoInsertSuggestion,
+    this.onChipsChanged,
     this.defaultValue,
   });
 
@@ -173,6 +220,11 @@ class _ShadcnChipInputWidgetState extends State<ShadcnChipInputWidget> {
     // Update the form controller with the FieldOption list
     widget.context.setValue<List<form.FieldOption>>(chipOptions);
 
+    // Call onChipsChanged callback if provided
+    if (_field.onChipsChanged != null) {
+      _field.onChipsChanged!(chipOptions);
+    }
+
     // Update suggestions based on current text
     setState(() {
       final currentText = _chipController.textAtCursor;
@@ -243,7 +295,9 @@ class _ShadcnChipInputWidgetState extends State<ShadcnChipInputWidget> {
             controller: _chipController,
             placeholder: _placeholder != null
                 ? Text(_placeholder!)
-                : null,
+                : _field.hintText != null
+                    ? Text(_field.hintText!)
+                    : null,
             enabled: !ctx.field.disabled,
             onChipSubmitted: (value) {
               setState(() {
@@ -254,6 +308,18 @@ class _ShadcnChipInputWidgetState extends State<ShadcnChipInputWidget> {
             chipBuilder: (context, chip) {
               return Text(chip);
             },
+            keyboardType: _field.keyboardType,
+            textInputAction: _field.textInputAction,
+            maxLines: _field.maxLines,
+            minLines: _field.minLines,
+            inputFormatters: _field.inputFormatters,
+            style: _field.style,
+            readOnly: _field.readOnly ?? false,
+            obscureText: _field.obscureText ?? false,
+            autocorrect: _field.autocorrect ?? true,
+            enableSuggestions: _field.enableSuggestions ?? true,
+            maxLength: _field.maxLength,
+            autofocus: _field.autofocus ?? false,
           ),
         ),
       ],

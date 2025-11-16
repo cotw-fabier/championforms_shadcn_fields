@@ -97,11 +97,8 @@ class ShadcnItemPickerField extends Field {
 /// )
 /// ```
 class ShadcnItemPickerWidget extends form.StatefulFieldWidget {
-  final List<form.FieldOption> options;
-
   const ShadcnItemPickerWidget({
     required super.context,
-    required this.options,
     super.key,
   });
 
@@ -111,6 +108,10 @@ class ShadcnItemPickerWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    // Get field and options from ShadcnItemPickerField
+    final field = ctx.field as ShadcnItemPickerField;
+    final options = field.options;
+
     final selectedOption = ctx.getValue<form.FieldOption?>();
     final errors = ctx.controller.findErrors(ctx.field.id);
     final hasError = errors.isNotEmpty;

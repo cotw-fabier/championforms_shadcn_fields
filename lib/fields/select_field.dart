@@ -37,6 +37,9 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// );
 /// ```
 class ShadcnSelectField extends form.OptionSelect {
+  /// Full constraint control for popover/constraints.
+  final BoxConstraints? popoverConstraints;
+
   ShadcnSelectField({
     required super.id,
     super.title,
@@ -54,6 +57,7 @@ class ShadcnSelectField extends form.OptionSelect {
     required super.options,
     super.defaultValue,
     super.multiselect,
+    this.popoverConstraints,
   });
 }
 
@@ -94,8 +98,8 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get options from the OptionSelect field
-    final field = ctx.field as form.OptionSelect;
+    // Get options from the ShadcnSelectField
+    final field = ctx.field as ShadcnSelectField;
     final options = field.options ?? [];
 
     // Check if multiselect mode is enabled
@@ -106,9 +110,9 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!isMultiselect)
-          _buildSingleSelect(ctx, options)
+          _buildSingleSelect(ctx, options, field)
         else
-          _buildMultiSelect(ctx, options),
+          _buildMultiSelect(ctx, options, field),
       ],
     );
   }
@@ -117,6 +121,7 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
   Widget _buildSingleSelect(
     form.FieldBuilderContext ctx,
     List<form.FieldOption> options,
+    ShadcnSelectField field,
   ) {
     // OptionSelect stores as List, even in single-select mode
     final value = ctx.getValue<List<form.FieldOption>>();
@@ -152,7 +157,7 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
       placeholder: ctx.field.description != null
           ? Text(ctx.field.description!)
           : const Text('Select an option'),
-      popupConstraints: const BoxConstraints(maxHeight: 300, maxWidth: 400),
+      popupConstraints: field.popoverConstraints ?? const BoxConstraints(maxHeight: 300, maxWidth: 400),
       popup: shadcn.SelectPopup(
         items: shadcn.SelectItemList(
           children: options.map((option) {
@@ -184,6 +189,7 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
   Widget _buildMultiSelect(
     form.FieldBuilderContext ctx,
     List<form.FieldOption> options,
+    ShadcnSelectField field,
   ) {
     final value = ctx.getValue<List<form.FieldOption>>();
 
@@ -223,7 +229,7 @@ class ShadcnSelectWidget extends form.StatefulFieldWidget {
       placeholder: ctx.field.description != null
           ? Text(ctx.field.description!)
           : const Text('Select options'),
-      constraints: const BoxConstraints(minWidth: 200),
+      constraints: field.popoverConstraints ?? const BoxConstraints(minWidth: 200),
       popup: shadcn.SelectPopup(
         items: shadcn.SelectItemList(
           children: options.map((option) {

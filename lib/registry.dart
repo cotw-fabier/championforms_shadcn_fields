@@ -106,10 +106,7 @@ class ShadcnFieldRegistry {
 
     FormFieldRegistry.register<ShadcnItemPickerField>(
       'shadcn_item_picker',
-      (ctx) {
-        final field = ctx.field as ShadcnItemPickerField;
-        return ShadcnItemPickerWidget(context: ctx, options: field.options);
-      },
+      (ctx) => ShadcnItemPickerWidget(context: ctx),
     );
 
     // Input Enhancement & Numeric Fields - Group 4

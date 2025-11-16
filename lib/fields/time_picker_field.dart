@@ -26,6 +26,30 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// );
 /// ```
 class ShadcnTimePickerField extends form.Field {
+  /// Popover vs dialog mode for the picker
+  final shadcn.PromptMode? mode;
+
+  /// Custom placeholder widget shown when no time is selected
+  final Widget? placeholder;
+
+  /// Whether to use 24-hour format
+  final bool? use24HourFormat;
+
+  /// Whether to show seconds selection
+  final bool? showSeconds;
+
+  /// Popup alignment relative to the trigger
+  final AlignmentGeometry? popoverAlignment;
+
+  /// Anchor alignment for the popup
+  final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Internal padding for the popover
+  final EdgeInsetsGeometry? popoverPadding;
+
+  /// Dialog title widget (for dialog mode)
+  final Widget? dialogTitle;
+
   @override
   final form.FieldOption? defaultValue;
 
@@ -43,6 +67,14 @@ class ShadcnTimePickerField extends form.Field {
     super.theme,
     super.fieldLayout,
     super.fieldBackground,
+    this.mode,
+    this.placeholder,
+    this.use24HourFormat,
+    this.showSeconds,
+    this.popoverAlignment,
+    this.popoverAnchorAlignment,
+    this.popoverPadding,
+    this.dialogTitle,
     this.defaultValue,
   });
 
@@ -118,6 +150,7 @@ class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
     FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
+    final field = ctx.field as ShadcnTimePickerField;
     final fieldOption = ctx.getValue<form.FieldOption?>();
     final value = extractTimeOfDay(fieldOption);
 
@@ -128,7 +161,14 @@ class ShadcnTimePickerWidget extends form.StatefulFieldWidget {
         shadcn.TimePicker(
           key: ValueKey('timepicker_${ctx.field.id}'),
           value: value,
-          mode: shadcn.PromptMode.popover,
+          mode: field.mode ?? shadcn.PromptMode.popover,
+          placeholder: field.placeholder,
+          use24HourFormat: field.use24HourFormat,
+          showSeconds: field.showSeconds ?? false,
+          popoverAlignment: field.popoverAlignment,
+          popoverAnchorAlignment: field.popoverAnchorAlignment,
+          popoverPadding: field.popoverPadding,
+          dialogTitle: field.dialogTitle,
           onChanged: ctx.field.disabled
               ? null
               : (newValue) {

@@ -23,6 +23,28 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 /// );
 /// ```
 class ShadcnCheckboxField extends form.OptionSelect {
+  /// Widget displayed before checkbox square
+  @override
+  final Widget? leading;
+
+  /// Size of checkbox square in logical pixels
+  final double? size;
+
+  /// Spacing between checkbox and leading/trailing
+  final double? gap;
+
+  /// Background color when unchecked
+  final Color? backgroundColor;
+
+  /// Color when checked
+  final Color? activeColor;
+
+  /// Border color when unchecked
+  final Color? borderColor;
+
+  /// Corner radius of checkbox
+  final BorderRadiusGeometry? borderRadius;
+
   ShadcnCheckboxField({
     required super.id,
     super.title,
@@ -40,6 +62,13 @@ class ShadcnCheckboxField extends form.OptionSelect {
     required super.options,
     super.defaultValue,
     super.multiselect,
+    this.leading,
+    this.size,
+    this.gap,
+    this.backgroundColor,
+    this.activeColor,
+    this.borderColor,
+    this.borderRadius,
   });
 }
 
@@ -76,13 +105,8 @@ class ShadcnCheckboxWidget extends form.StatefulFieldWidget {
     form.FormTheme theme,
     form.FieldBuilderContext ctx,
   ) {
-    // Get validation errors
-    final errors = ctx.controller.findErrors(ctx.field.id);
-    final hasError = errors.isNotEmpty;
-    final errorColors = theme.errorColorScheme ?? ctx.colors;
-
     // Get options from the OptionSelect field
-    final field = ctx.field as form.OptionSelect;
+    final field = ctx.field as ShadcnCheckboxField;
     final options = field.options ?? [];
 
     return Column(
@@ -109,6 +133,13 @@ class ShadcnCheckboxWidget extends form.StatefulFieldWidget {
                       ctx.toggleValue(option);
                     },
               trailing: Text(option.label),
+              leading: field.leading,
+              size: field.size,
+              gap: field.gap,
+              backgroundColor: field.backgroundColor,
+              activeColor: field.activeColor,
+              borderColor: field.borderColor,
+              borderRadius: field.borderRadius,
             ),
           );
         }),

@@ -12,7 +12,9 @@ dependencies:
   championforms_shadcn_fields:
     path: ../
   championforms:
-    path: /Users/fabier/Documents/code/championforms
+    git:
+      url: https://github.com/cotw-fabier/championforms.git
+
   shadcn_flutter: ^0.0.47
 
 dev_dependencies:

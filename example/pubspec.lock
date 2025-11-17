@@ -28,9 +28,11 @@ packages:
   championforms:
     dependency: "direct main"
     description:
-      path: "/Users/fabier/Documents/code/championforms"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: f9a5ba5b9c41d015803892e6a67555ac233856a8
+      url: "https://github.com/cotw-fabier/championforms.git"
+    source: git
     version: "0.5.3"
   championforms_shadcn_fields:
     dependency: "direct main"

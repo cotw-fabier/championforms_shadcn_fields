@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 /// A radio group field using ShadCN Flutter's RadioGroup component.
@@ -60,19 +61,23 @@ class RadioGroupField extends form.OptionSelect {
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldLayout,
     Widget Function(
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldBackground,
     List<form.FieldOption>? options,
     List<form.FieldOption>? defaultValue,
+    bool? caseSensitiveDefaultValue,
     bool? multiselect,
+    Widget Function(form.FieldBuilderContext)? fieldBuilder,
+    Widget? leading,
+    Widget? trailing,
   }) {
     return RadioGroupField(
       id: id ?? this.id,

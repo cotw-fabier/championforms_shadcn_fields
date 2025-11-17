@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 /// A custom field that displays a toggle button using ShadCN Flutter's Toggle component.
@@ -67,14 +68,14 @@ class ToggleField extends form.Field {
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldLayout,
     Widget Function(
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldBackground,
     form.FieldOption? checkedOption,

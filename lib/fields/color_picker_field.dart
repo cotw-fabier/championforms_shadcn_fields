@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as material;
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:championforms/championforms_themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import '../converters/color_option_converters.dart';
@@ -122,14 +123,14 @@ class ColorPickerField extends form.Field {
       material.BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       material.Widget,
     )? fieldLayout,
     material.Widget Function(
       material.BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       material.Widget,
     )? fieldBackground,
     PromptMode? mode,

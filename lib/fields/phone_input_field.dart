@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
 /// A custom field that displays a phone number input widget.
@@ -108,14 +109,14 @@ class PhoneInputField extends form.Field {
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldLayout,
     Widget Function(
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldBackground,
     shadcn.Country? initialCountry,

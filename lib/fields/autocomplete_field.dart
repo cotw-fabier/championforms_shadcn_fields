@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:championforms/models/themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
 
@@ -117,14 +118,14 @@ class AutoCompleteField extends form.Field {
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldLayout,
     Widget Function(
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldBackground,
     List<String>? suggestions,
@@ -190,8 +191,10 @@ class AutoCompleteField extends form.Field {
       borderRadius: borderRadius ?? this.borderRadius,
       filled: filled ?? this.filled,
       popoverConstraints: popoverConstraints ?? this.popoverConstraints,
-      popoverWidthConstraint: popoverWidthConstraint ?? this.popoverWidthConstraint,
-      popoverAnchorAlignment: popoverAnchorAlignment ?? this.popoverAnchorAlignment,
+      popoverWidthConstraint:
+          popoverWidthConstraint ?? this.popoverWidthConstraint,
+      popoverAnchorAlignment:
+          popoverAnchorAlignment ?? this.popoverAnchorAlignment,
       popoverAlignment: popoverAlignment ?? this.popoverAlignment,
       mode: mode ?? this.mode,
       completer: completer ?? this.completer,
@@ -204,27 +207,28 @@ class AutoCompleteField extends form.Field {
 
   @override
   String Function(dynamic value) get asStringConverter => (value) {
-        if (value is String) return value;
-        if (value == null) return '';
-        throw TypeError();
-      };
+    if (value is String) return value;
+    if (value == null) return '';
+    throw TypeError();
+  };
 
   @override
   List<String> Function(dynamic value) get asStringListConverter => (value) {
-        if (value is String) return [value];
-        if (value == null) return [];
-        throw TypeError();
-      };
+    if (value is String) return [value];
+    if (value == null) return [];
+    throw TypeError();
+  };
 
   @override
   bool Function(dynamic value) get asBoolConverter => (value) {
-        if (value is String) return value.isNotEmpty;
-        if (value == null) return false;
-        throw TypeError();
-      };
+    if (value is String) return value.isNotEmpty;
+    if (value == null) return false;
+    throw TypeError();
+  };
 
   @override
-  List<form.FileModel>? Function(dynamic value)? get asFileListConverter => null;
+  List<form.FileModel>? Function(dynamic value)? get asFileListConverter =>
+      null;
 }
 
 /// Autocomplete text field using ShadCN Flutter's AutoComplete widget.
@@ -245,10 +249,7 @@ class AutoCompleteField extends form.Field {
 /// )
 /// ```
 class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
-  const ShadcnAutoCompleteWidget({
-    required super.context,
-    super.key,
-  });
+  const ShadcnAutoCompleteWidget({required super.context, super.key});
 
   @override
   Widget buildWithTheme(
@@ -267,11 +268,12 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
     final filteredSuggestions = value.isEmpty
         ? <String>[]
         : field.suggestions
-            .where((s) => s.toLowerCase().contains(value.toLowerCase()))
-            .toList();
+              .where((s) => s.toLowerCase().contains(value.toLowerCase()))
+              .toList();
 
     // Build default features if not provided
-    final effectiveFeatures = field.features ??
+    final effectiveFeatures =
+        field.features ??
         const [shadcn.InputFeature.trailing(Icon(shadcn.LucideIcons.search))];
 
     return Column(
@@ -309,8 +311,8 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
               placeholder: field.placeholder != null
                   ? Text(field.placeholder!)
                   : field.hintText != null
-                      ? Text(field.hintText!)
-                      : null,
+                  ? Text(field.hintText!)
+                  : null,
               enabled: !ctx.field.disabled,
               features: effectiveFeatures,
               keyboardType: field.keyboardType,
@@ -336,16 +338,15 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
             child: Text(ctx.field.description!, style: theme.hintTextStyle),
           ),
         if (hasError)
-          ...errors.map((error) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.reason,
-                  style: TextStyle(
-                    color: errorColors.textColor,
-                    fontSize: 12,
-                  ),
-                ),
-              )),
+          ...errors.map(
+            (error) => Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                error.reason,
+                style: TextStyle(color: errorColors.textColor, fontSize: 12),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -353,7 +354,9 @@ class ShadcnAutoCompleteWidget extends form.StatefulFieldWidget {
   @override
   void onValueChanged(dynamic oldValue, dynamic newValue) {
     if (context.field.onChange != null) {
-      final results = form.FormResults.getResults(controller: context.controller);
+      final results = form.FormResults.getResults(
+        controller: context.controller,
+      );
       context.field.onChange!(results);
     }
   }

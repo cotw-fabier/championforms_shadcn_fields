@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:championforms/models/field_types/formfieldclass.dart';
 import 'package:championforms/models/file_model.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
@@ -66,14 +67,14 @@ class ItemPickerField extends Field {
       BuildContext,
       Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldLayout,
     Widget Function(
       BuildContext,
       Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldBackground,
     List<form.FieldOption>? options,

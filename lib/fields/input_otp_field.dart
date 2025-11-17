@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:championforms/championforms.dart' as form;
+import 'package:championforms/models/colorscheme.dart';
 import 'package:championforms/models/file_model.dart';
 import 'package:championforms/models/themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn;
@@ -118,14 +119,14 @@ class InputOTPField extends form.Field {
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldLayout,
     Widget Function(
       BuildContext,
       form.Field,
       form.FormController,
-      form.FieldColorScheme,
+      FieldColorScheme,
       Widget,
     )? fieldBackground,
     int? length,

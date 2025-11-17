@@ -104,6 +104,78 @@ class ColorPickerField extends form.Field {
     this.defaultValue,
   });
 
+  @override
+  ColorPickerField copyWith({
+    String? id,
+    material.Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    material.Widget Function(
+      material.BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      material.Widget,
+    )? fieldLayout,
+    material.Widget Function(
+      material.BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      material.Widget,
+    )? fieldBackground,
+    PromptMode? mode,
+    ValueChanged<ColorDerivative>? onChanging,
+    bool? showAlpha,
+    ColorPickerMode? initialMode,
+    bool? enableEyeDropper,
+    AlignmentGeometry? popoverAlignment,
+    AlignmentGeometry? popoverAnchorAlignment,
+    EdgeInsetsGeometry? popoverPadding,
+    material.Widget? placeholder,
+    material.Widget? dialogTitle,
+    bool? showHistory,
+    bool? showLabel,
+    form.FieldOption? defaultValue,
+  }) {
+    return ColorPickerField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      mode: mode ?? this.mode,
+      onChanging: onChanging ?? this.onChanging,
+      showAlpha: showAlpha ?? this.showAlpha,
+      initialMode: initialMode ?? this.initialMode,
+      enableEyeDropper: enableEyeDropper ?? this.enableEyeDropper,
+      popoverAlignment: popoverAlignment ?? this.popoverAlignment,
+      popoverAnchorAlignment: popoverAnchorAlignment ?? this.popoverAnchorAlignment,
+      popoverPadding: popoverPadding ?? this.popoverPadding,
+      placeholder: placeholder ?? this.placeholder,
+      dialogTitle: dialogTitle ?? this.dialogTitle,
+      showHistory: showHistory ?? this.showHistory,
+      showLabel: showLabel ?? this.showLabel,
+      defaultValue: defaultValue ?? this.defaultValue,
+    );
+  }
+
   // --- Converter Implementations ---
   // These converters handle type conversion for FormResults
 

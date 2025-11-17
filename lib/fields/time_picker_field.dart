@@ -78,6 +78,70 @@ class TimePickerField extends form.Field {
     this.defaultValue,
   });
 
+  @override
+  TimePickerField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    shadcn.PromptMode? mode,
+    Widget? placeholder,
+    bool? use24HourFormat,
+    bool? showSeconds,
+    AlignmentGeometry? popoverAlignment,
+    AlignmentGeometry? popoverAnchorAlignment,
+    EdgeInsetsGeometry? popoverPadding,
+    Widget? dialogTitle,
+    form.FieldOption? defaultValue,
+  }) {
+    return TimePickerField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      mode: mode ?? this.mode,
+      placeholder: placeholder ?? this.placeholder,
+      use24HourFormat: use24HourFormat ?? this.use24HourFormat,
+      showSeconds: showSeconds ?? this.showSeconds,
+      popoverAlignment: popoverAlignment ?? this.popoverAlignment,
+      popoverAnchorAlignment: popoverAnchorAlignment ?? this.popoverAnchorAlignment,
+      popoverPadding: popoverPadding ?? this.popoverPadding,
+      dialogTitle: dialogTitle ?? this.dialogTitle,
+      defaultValue: defaultValue ?? this.defaultValue,
+    );
+  }
+
   // --- Converter Implementations ---
   // These converters handle type conversion for FormResults
 

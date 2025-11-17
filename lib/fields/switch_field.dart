@@ -71,6 +71,72 @@ class SwitchField extends form.OptionSelect {
     this.inactiveThumbColor,
     this.borderRadius,
   });
+
+  @override
+  SwitchField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    List<form.FieldOption>? options,
+    List<form.FieldOption>? defaultValue,
+    bool? multiselect,
+    bool? labelOnLeft,
+    double? gap,
+    Color? activeColor,
+    Color? inactiveColor,
+    Color? activeThumbColor,
+    Color? inactiveThumbColor,
+    BorderRadiusGeometry? borderRadius,
+  }) {
+    return SwitchField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      options: options ?? this.options,
+      defaultValue: defaultValue ?? this.defaultValue,
+      multiselect: multiselect ?? this.multiselect,
+      labelOnLeft: labelOnLeft ?? this.labelOnLeft,
+      gap: gap ?? this.gap,
+      activeColor: activeColor ?? this.activeColor,
+      inactiveColor: inactiveColor ?? this.inactiveColor,
+      activeThumbColor: activeThumbColor ?? this.activeThumbColor,
+      inactiveThumbColor: inactiveThumbColor ?? this.inactiveThumbColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+    );
+  }
 }
 
 /// A switch group widget using ShadCN Flutter's Switch component.

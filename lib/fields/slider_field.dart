@@ -83,6 +83,68 @@ class SliderField extends form.Field {
     this.defaultValue,
   });
 
+  @override
+  SliderField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    double? min,
+    double? max,
+    int? divisions,
+    bool? showLabel,
+    bool? isRange,
+    double? initialValue,
+    List<double>? initialRange,
+    shadcn.SliderValue? defaultValue,
+  }) {
+    return SliderField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      min: min ?? this.min,
+      max: max ?? this.max,
+      divisions: divisions ?? this.divisions,
+      showLabel: showLabel ?? this.showLabel,
+      isRange: isRange ?? this.isRange,
+      initialValue: initialValue ?? this.initialValue,
+      initialRange: initialRange ?? this.initialRange,
+      defaultValue: defaultValue ?? this.defaultValue,
+    );
+  }
+
   // --- Converter Implementations ---
   // These converters handle type conversion for FormResults
 

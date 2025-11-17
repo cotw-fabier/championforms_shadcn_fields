@@ -49,6 +49,57 @@ class ToggleField extends form.Field {
     this.icon,
   });
 
+  @override
+  ToggleField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    form.FieldOption? checkedOption,
+    form.FieldOption? defaultValue,
+  }) {
+    return ToggleField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      checkedOption: checkedOption ?? this.checkedOption,
+      defaultValue: defaultValue ?? this.defaultValue,
+      icon: icon ?? this.icon,
+    );
+  }
+
   // --- Converter Implementations ---
   // These converters handle type conversion for FormResults
 

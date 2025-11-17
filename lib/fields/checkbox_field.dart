@@ -70,6 +70,72 @@ class CheckboxField extends form.OptionSelect {
     this.borderColor,
     this.borderRadius,
   });
+
+  @override
+  CheckboxField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    List<form.FieldOption>? options,
+    List<form.FieldOption>? defaultValue,
+    bool? multiselect,
+    Widget? leading,
+    double? size,
+    double? gap,
+    Color? backgroundColor,
+    Color? activeColor,
+    Color? borderColor,
+    BorderRadiusGeometry? borderRadius,
+  }) {
+    return CheckboxField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      options: options ?? this.options,
+      defaultValue: defaultValue ?? this.defaultValue,
+      multiselect: multiselect ?? this.multiselect,
+      leading: leading ?? this.leading,
+      size: size ?? this.size,
+      gap: gap ?? this.gap,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      activeColor: activeColor ?? this.activeColor,
+      borderColor: borderColor ?? this.borderColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+    );
+  }
 }
 
 /// A checkbox group widget using ShadCN Flutter's Checkbox component.

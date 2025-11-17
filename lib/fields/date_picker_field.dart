@@ -96,6 +96,74 @@ class DatePickerField extends form.Field {
     this.defaultValue,
   });
 
+  @override
+  DatePickerField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    bool? isRangeSelector,
+    shadcn.PromptMode? mode,
+    Widget? placeholder,
+    shadcn.CalendarView? initialView,
+    AlignmentGeometry? popoverAlignment,
+    AlignmentGeometry? popoverAnchorAlignment,
+    EdgeInsetsGeometry? popoverPadding,
+    Widget? dialogTitle,
+    shadcn.CalendarViewType? initialViewType,
+    shadcn.DateStateBuilder? stateBuilder,
+    form.FieldOption? defaultValue,
+  }) {
+    return DatePickerField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      isRangeSelector: isRangeSelector ?? this.isRangeSelector,
+      mode: mode ?? this.mode,
+      placeholder: placeholder ?? this.placeholder,
+      initialView: initialView ?? this.initialView,
+      popoverAlignment: popoverAlignment ?? this.popoverAlignment,
+      popoverAnchorAlignment: popoverAnchorAlignment ?? this.popoverAnchorAlignment,
+      popoverPadding: popoverPadding ?? this.popoverPadding,
+      dialogTitle: dialogTitle ?? this.dialogTitle,
+      initialViewType: initialViewType ?? this.initialViewType,
+      stateBuilder: stateBuilder ?? this.stateBuilder,
+      defaultValue: defaultValue ?? this.defaultValue,
+    );
+  }
+
   // --- Converter Implementations ---
   // These converters handle type conversion for FormResults
 

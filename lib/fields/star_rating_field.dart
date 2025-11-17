@@ -94,6 +94,66 @@ class StarRatingField extends form.Field {
     this.starSpacing,
   });
 
+  @override
+  StarRatingField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    form.FieldOption? defaultValue,
+    double? max,
+    double? step,
+    Color? activeColor,
+    Color? backgroundColor,
+    double? starSize,
+    double? starSpacing,
+  }) {
+    return StarRatingField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      defaultValue: defaultValue ?? this.defaultValue,
+      max: max ?? this.max,
+      step: step ?? this.step,
+      activeColor: activeColor ?? this.activeColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      starSize: starSize ?? this.starSize,
+      starSpacing: starSpacing ?? this.starSpacing,
+    );
+  }
+
   // --- Converter Implementations ---
   // These converters handle type conversion for FormResults
 

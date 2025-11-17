@@ -59,6 +59,60 @@ class SelectField extends form.OptionSelect {
     super.multiselect,
     this.popoverConstraints,
   });
+
+  @override
+  SelectField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    List<form.FieldOption>? options,
+    List<form.FieldOption>? defaultValue,
+    bool? multiselect,
+    BoxConstraints? popoverConstraints,
+  }) {
+    return SelectField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      options: options ?? this.options,
+      defaultValue: defaultValue ?? this.defaultValue,
+      multiselect: multiselect ?? this.multiselect,
+      popoverConstraints: popoverConstraints ?? this.popoverConstraints,
+    );
+  }
 }
 
 /// Select/MultiSelect widget using ShadCN Flutter's Select or MultiSelect component.

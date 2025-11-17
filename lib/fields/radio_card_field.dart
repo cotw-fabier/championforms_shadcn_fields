@@ -47,6 +47,61 @@ class RadioCardField extends form.OptionSelect {
     this.wrapSpacing,
     this.runGap,
   });
+
+  @override
+  RadioCardField copyWith({
+    String? id,
+    Widget? icon,
+    String? title,
+    String? description,
+    bool? disabled,
+    bool? hideField,
+    bool? requestFocus,
+    List<form.Validator>? validators,
+    bool? validateLive,
+    Function(form.FormResults)? onSubmit,
+    Function(form.FormResults)? onChange,
+    form.FormTheme? theme,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldLayout,
+    Widget Function(
+      BuildContext,
+      form.Field,
+      form.FormController,
+      form.FieldColorScheme,
+      Widget,
+    )? fieldBackground,
+    List<form.FieldOption>? options,
+    List<form.FieldOption>? defaultValue,
+    bool? multiselect,
+    double? wrapSpacing,
+    double? runGap,
+  }) {
+    return RadioCardField(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      disabled: disabled ?? this.disabled,
+      hideField: hideField ?? this.hideField,
+      requestFocus: requestFocus ?? this.requestFocus,
+      validators: validators ?? this.validators,
+      validateLive: validateLive ?? this.validateLive,
+      onSubmit: onSubmit ?? this.onSubmit,
+      onChange: onChange ?? this.onChange,
+      theme: theme ?? this.theme,
+      fieldLayout: fieldLayout ?? this.fieldLayout,
+      fieldBackground: fieldBackground ?? this.fieldBackground,
+      options: options ?? this.options,
+      defaultValue: defaultValue ?? this.defaultValue,
+      wrapSpacing: wrapSpacing ?? this.wrapSpacing,
+      runGap: runGap ?? this.runGap,
+    );
+  }
 }
 
 /// Radio Card field - Radio selection with card UI

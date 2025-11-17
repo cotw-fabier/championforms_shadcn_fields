@@ -14,7 +14,7 @@ dependencies:
   championforms:
     git:
       url: https://github.com/cotw-fabier/championforms.git
-  shadcn_flutter: ^0.0.47
+  shadcn_flutter: ^0.1.0
   intl: ^0.19.0
 
 dev_dependencies:

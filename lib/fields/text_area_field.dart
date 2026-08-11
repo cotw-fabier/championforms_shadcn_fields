@@ -297,7 +297,9 @@ class ShadcnTextAreaWidget extends form.StatefulFieldWidget {
             autocorrect: field.autocorrect ?? true,
             enableSuggestions: field.enableSuggestions ?? true,
             maxLength: field.maxLength,
-            autofocus: field.autofocus ?? false,
+            // Fall back to the core requestFocus flag so both field families
+            // honor it; an explicit autofocus still wins.
+            autofocus: field.autofocus ?? field.requestFocus,
             border: field.border,
             borderRadius: field.borderRadius,
             filled: field.filled,

@@ -416,7 +416,9 @@ class _ShadcnNumberInputWidgetState extends State<ShadcnNumberInputWidget> {
               autocorrect: _field.autocorrect ?? true,
               enableSuggestions: _field.enableSuggestions ?? true,
               maxLength: _field.maxLength,
-              autofocus: _field.autofocus ?? false,
+              // Fall back to the core requestFocus flag so both field
+              // families honor it; an explicit autofocus still wins.
+              autofocus: _field.autofocus ?? _field.requestFocus,
             ),
           ),
         ),
